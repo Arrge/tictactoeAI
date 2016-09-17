@@ -33,7 +33,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="tictactoeai.gui.Grid" name="grid1">
+    <Container class="tictactoeai.board.gui.Grid" name="grid1">
 
       <Layout>
         <DimensionLayout dim="0">

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tictactoeai.AI;
 
 /**
@@ -13,6 +9,16 @@ public class SpaceRank {
     private int rank;
     private int x, y;
     private boolean[] marksHoriz, marksVert, marksDiag;
+
+    public SpaceRank(int x, int y) {
+        this.rank = 0;
+        this.x = x;
+        this.y = y;
+        this.marksHoriz = new boolean[8];
+        this.marksVert = new boolean[8];
+        this.marksDiag = new boolean[8];
+    }
+    
     
     
     //replace with addMark/removeMark(direction, distance)?
@@ -73,6 +79,10 @@ public class SpaceRank {
 
     public int getY() {
         return y;
+    }
+
+    public int getRank() {
+        return rank;
     }
     
     

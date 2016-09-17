@@ -1,18 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tictactoeai.gui;
 
+package tictactoeai.board.gui;
+
+import java.awt.Color;
 import java.awt.Graphics;
+import tictactoeai.board.GridValues;
 
 /**
  *
  * @author Liekkipipo-pc
  */
 public class Grid extends javax.swing.JPanel {
-
+    //false = circle, true = cross
+    private boolean nextMove = false;
+    private GridValues gv = new GridValues(15);
+    private final int gridSideLength = 300;
     /**
      * Creates new form grid
      */
@@ -48,20 +49,66 @@ public class Grid extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        
+        addMove(evt.getX()/(gridSideLength/gv.getSideLength()), evt.getY()/(gridSideLength/gv.getSideLength()));
     }//GEN-LAST:event_formMouseClicked
-
+    
+    /**
+     * add the next move
+     * @param x
+     * @param y
+     */
+    public void addMove(int x, int y) {
+        gv.setSpace(x, y, nextMove);
+        nextMove = !nextMove;
+        repaint();
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int height = 300;
         
-        for (int x = 0; x <= height; x += height / 15) {
-            g.drawLine(x, 0, x, height);
-            g.drawLine(0, x, height, x);
+        drawGrid(g);
+        drawSymbols(g);       
+    }
+    
+    private void drawGrid(Graphics g) {
+        for (int x = 0; x <= gridSideLength; x += gridSideLength / 15) {
+            g.drawLine(x, 0, x, gridSideLength);
+            g.drawLine(0, x, gridSideLength, x);
         }
     }
-
+    
+    private void drawSymbols(Graphics g) {
+        g.setColor(Color.black);
+        for (int x = 0; x < gv.getSideLength(); x++) {
+            for (int y = 0; y < gv.getSideLength(); y++) {
+                if (gv.getGrid()[x][y] == null) {
+                    continue;
+                }
+                else if (gv.getGrid()[x][y] == true) {
+                    drawCross(x,y,g);
+                }
+                else if (gv.getGrid()[x][y] == false) {
+                    drawCircle(x,y,g);
+                }
+            }
+        }
+    }
+    
+    private void drawCross(int x, int y, Graphics g) {
+        g.setColor(Color.blue);
+        x = x * (gridSideLength/gv.getSideLength());
+        y = y * (gridSideLength/gv.getSideLength());
+        g.drawLine(x, y, x+(gridSideLength/gv.getSideLength()), y+(gridSideLength/gv.getSideLength()));
+        g.drawLine(x, y+(gridSideLength/gv.getSideLength()), x+(gridSideLength/gv.getSideLength()), y);
+    }
+    
+    private void drawCircle(int x, int y, Graphics g) {
+        g.setColor(Color.red);
+        x = x * (gridSideLength/gv.getSideLength());
+        y = y * (gridSideLength/gv.getSideLength());
+        g.drawOval(x, y, (gridSideLength/gv.getSideLength()), (gridSideLength/gv.getSideLength()));
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

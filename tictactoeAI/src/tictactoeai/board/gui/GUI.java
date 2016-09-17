@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tictactoeai.gui;
+
+package tictactoeai.board.gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
@@ -29,7 +25,7 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        grid1 = new tictactoeai.gui.Grid();
+        grid1 = new tictactoeai.board.gui.Grid();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +90,6 @@ public class GUI extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private tictactoeai.gui.Grid grid1;
+    private tictactoeai.board.gui.Grid grid1;
     // End of variables declaration//GEN-END:variables
 }

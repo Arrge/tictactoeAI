@@ -1,18 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tictactoeai.AI;
 
-import tictactoeai.gui.GridValues;
+package tictactoeai.AI.tools;
+
+import tictactoeai.AI.SpaceRank;
+import tictactoeai.board.GridValues;
 
 /**
  *
  * @author Liekkipipo-pc
  */
-public class RowScanner {
+public class BoardScanner {
     
+    /**
+     * check horizontally for marks up to 4 spaces away from current space
+     * @param sr 
+     * @param grid
+     * @param mark true = cross, false = circle
+     */
     public static void horizontalPossibilities(SpaceRank sr, GridValues grid, boolean mark) {
         int x = sr.getX();
         int y = sr.getY();
@@ -36,6 +39,12 @@ public class RowScanner {
         }
     }
     
+    /**
+     * check vertically for marks up to 4 spaces away from current space
+     * @param sr
+     * @param grid
+     * @param mark true = cross, false = circle
+     */
     public static void verticalPossibilities(SpaceRank sr, GridValues grid, boolean mark) {
         int x = sr.getX();
         int y = sr.getY();
@@ -59,6 +68,12 @@ public class RowScanner {
         }  
     }
     
+    /**
+     * check diagonally for marks up to 4 spaces away from current space
+     * @param sr
+     * @param grid
+     * @param mark true = cross, false = circle
+     */
     public static void DiagonalPossibilities(SpaceRank sr, GridValues grid, boolean mark) {
         int x = sr.getX();
         int y = sr.getY();
@@ -81,5 +96,6 @@ public class RowScanner {
             }
         }
     }
+    
     
 }
