@@ -3,6 +3,8 @@ package tictactoeai.board.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import tictactoeai.AI.AI;
 import tictactoeai.board.GridValues;
 
 /**
@@ -11,13 +13,16 @@ import tictactoeai.board.GridValues;
  */
 public class Grid extends javax.swing.JPanel {
     //false = circle, true = cross
-    private boolean nextMove = false;
+    private boolean nextMove = true;
     private GridValues gv = new GridValues(15);
     private final int gridSideLength = 300;
+    private AI bob;
     /**
      * Creates new form grid
      */
     public Grid() {
+        bob = new AI(nextMove);
+        addMove(7,7);
         initComponents();
     }
 
@@ -49,13 +54,15 @@ public class Grid extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        addMove(evt.getX()/(gridSideLength/gv.getSideLength()), evt.getY()/(gridSideLength/gv.getSideLength()));
+        addMove(evt.getX() / (gridSideLength/gv.getSideLength()), evt.getY() / (gridSideLength/gv.getSideLength()));
+        Point p = bob.getMove(gv);
+        addMove(p.x, p.y);
     }//GEN-LAST:event_formMouseClicked
     
     /**
      * add the next move
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      */
     public void addMove(int x, int y) {
         gv.setSpace(x, y, nextMove);
@@ -109,6 +116,18 @@ public class Grid extends javax.swing.JPanel {
         y = y * (gridSideLength/gv.getSideLength());
         g.drawOval(x, y, (gridSideLength/gv.getSideLength()), (gridSideLength/gv.getSideLength()));
     }
+
+    /**
+     *
+     * @return return the board
+     */
+    public GridValues getGv() {
+        return gv;
+    }
+
+    
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

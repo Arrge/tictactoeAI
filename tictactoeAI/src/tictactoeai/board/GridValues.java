@@ -8,14 +8,14 @@ public class GridValues {
     private Boolean[][] grid;
     private int sideLength;
 
+    /**
+     * 
+     * @param sideLength the grid size is sideLength * sideLength
+     */
     public GridValues(int sideLength) {
         this.grid = new Boolean[sideLength][sideLength];
         this.sideLength = sideLength;
     }
-    /**
-     *
-     * @param sideLength
-     */
     
     
     /**
@@ -53,10 +53,18 @@ public class GridValues {
         return grid[x][y];
     }
 
+    /**
+     *
+     * @return 
+     */
     public int getSideLength() {
         return sideLength;
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean[][] getGrid() {
         return grid;
     }

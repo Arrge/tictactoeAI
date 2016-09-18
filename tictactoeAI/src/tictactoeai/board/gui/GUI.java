@@ -1,8 +1,6 @@
 
 package tictactoeai.board.gui;
-import java.awt.Color;
-import java.awt.Graphics;
-import javax.swing.JPanel;
+
 /**
  *
  * @author Liekkipipo-pc
