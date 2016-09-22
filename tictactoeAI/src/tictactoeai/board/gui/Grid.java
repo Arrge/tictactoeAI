@@ -67,7 +67,8 @@ public class Grid extends javax.swing.JPanel {
     public void addMove(int x, int y) {
         gv.setSpace(x, y, nextMove);
         nextMove = !nextMove;
-        repaint();
+        paint(getGraphics());
+        
     }
     
     @Override

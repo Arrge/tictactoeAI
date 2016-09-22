@@ -10,15 +10,12 @@ public class SpaceRank {
     /**
      *
      */
-    public int rank;
-    public int x,
-
-    /**
-     *
-     */
-    y;
-    private boolean[] marksHoriz, marksVert, marksDiag;
-
+    int rank;
+    int x, y;
+    boolean[] marksHoriz, marksVert, marksDiag;
+    int consecutiveHoriz, consecutiveVert, consecutiveDiag;
+    //index of the first open space from (x,y)
+    int horizOpenLeft, horizOpenRight, vertOpenLeft, vertOpenRight, diagOpenLeft, diagOpenRight;
     /**
      * 
      * @param x x coordinate
@@ -28,9 +25,9 @@ public class SpaceRank {
         this.rank = 0;
         this.x = x;
         this.y = y;
-        this.marksHoriz = new boolean[10];
-        this.marksVert = new boolean[10];
-        this.marksDiag = new boolean[10];
+        this.marksHoriz = new boolean[9];
+        this.marksVert = new boolean[9];
+        this.marksDiag = new boolean[9];
     }
     
     /**
@@ -38,7 +35,44 @@ public class SpaceRank {
      * @return returns the rank of the space
      */
     public int calculateRank() {
-        for (int i = 0; i < 10; i++) {
+        
+        
+        
+        calculateMarks();
+        rank += checkConsecutives();
+        rank += (consecutiveHoriz + consecutiveDiag + consecutiveVert)/2;
+        
+        return rank;
+    }
+    
+    private int checkConsecutives() {
+        //add 10000 to rank if the move wins the game
+        if (consecutiveHoriz == 4 || consecutiveVert == 4 || consecutiveDiag == 4) {
+            return 10000;
+        }
+        //if 3 consecutive marks around the space and open slot on both sides
+        if (consecutiveHoriz == 3) {
+            if (horizOpenRight - horizOpenLeft == 5) {
+                return 10000;
+            }
+        }
+        
+        if (consecutiveVert == 3) {
+            if (vertOpenRight - vertOpenLeft == 5) {
+                return 10000;
+            }
+        }
+        
+        if (consecutiveDiag > 2) {
+            if (diagOpenRight - diagOpenLeft == 5) {
+                return 10000;
+            }
+        }
+        return 0;
+    }
+    
+    private void calculateMarks() {
+        for (int i = 0; i < marksHoriz.length; i++) {
             if (marksHoriz[i] == true) {
                 rank++;
             }
@@ -49,11 +83,65 @@ public class SpaceRank {
                 rank++;
             }
         }
-        return rank;
     }
     
-    //replace with addMark/removeMark(direction, distance)?
+    public void addVerticalOpen(int distance) {
+        if (distance < 0) {
+            vertOpenLeft = 4 + distance;
+        }
+        else if (distance > 0) {
+            vertOpenRight = 4 + distance;
+        }
+    }
+    
+    public void addHorizontalOpen(int distance) {
+        if (distance < 0) {
+            horizOpenLeft = 4 + distance;
+        }
+        else if (distance > 0) {
+            horizOpenRight = 4 + distance;
+        }
+    }
+    
+    public void addDiagonalOpen(int distance) {
+        if (distance < 0) {
+            diagOpenLeft = 4 + distance;
+        }
+        else if (distance > 0) {
+            diagOpenRight = 4 + distance;
+        }
+    }
+    
+    /**
+     * add the amount of consecutive marks from space on the horizontal sides of the space
+     * @param consecutive consecutive horizontal marks from space
+     */
+    public void addHorizontalConsecutives(int consecutive) {
+        if (consecutive > consecutiveHoriz) {
+            consecutiveHoriz = consecutive;
+        }
+    }
 
+    /**
+     * add the amount of consecutive marks from space on the vertical sides of the space
+     * @param consecutive consecutive vertical marks from space
+     */
+    public void addVerticalConsecutives(int consecutive) {
+        if (consecutive > consecutiveVert) {
+            consecutiveVert = consecutive;
+        }
+    }
+    
+    /**
+     * add the amount of consecutive marks from space on the diagonal sides of the space
+     * @param consecutive consecutive diagonal marks from space 
+     */
+    public void addDiagonalConsecutives(int consecutive) {
+        if (consecutive > consecutiveDiag) {
+            consecutiveDiag = consecutive;
+        }
+    }
+    
     /**
      * add mark that is horizontal distance away from the space
      * @param distance
@@ -161,5 +249,7 @@ public class SpaceRank {
         this.rank = rank;
     }
     
-    
+    public void addToRank(int rank) {
+        this.rank += rank;
+    }
 }

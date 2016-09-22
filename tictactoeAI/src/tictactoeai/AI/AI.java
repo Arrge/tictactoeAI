@@ -28,14 +28,20 @@ public class AI {
      * @return returns x,y coordinates for the next move
      */
     public Point getMove(GridValues grid) {
-        SpaceRank sr;
+        SpaceRank sr, srEnemy;
         rg = new RankedGrid(15);
         for (int i = 0; i < grid.getSideLength() * grid.getSideLength(); i++) {
             sr = new SpaceRank(i % (grid.getSideLength()), i / (grid.getSideLength()));
-            System.out.println(sr.getX() + ", " + sr.getY());
-            BoardScanner.possibilities(sr, grid, mark);
-            BoardScanner.possibilities(sr, grid, !mark);
+            srEnemy = new SpaceRank(i % (grid.getSideLength()), i / (grid.getSideLength()));
+            
+            BoardScanner.calculateRank(sr, grid, mark);
+            BoardScanner.calculateRank(srEnemy, grid, !mark);
             sr.calculateRank();
+            if (sr.getX() == 9 && sr.getY() == 3) {
+                System.out.println("asd");
+            }
+            srEnemy.calculateRank();
+            sr.addToRank(srEnemy.getRank());
             rg.addSpaceRank(sr);
         }
         sr = rg.getBestMove();
