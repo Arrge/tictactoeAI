@@ -8,7 +8,7 @@ import tictactoeai.board.GridValues;
  *
  * @author Liekkipipo-pc
  */
-public class RankedGrid extends GridValues {
+public class RankedGrid {
     private PriorityQueue<SpaceRank> maxHeap;
     
     /**
@@ -16,7 +16,6 @@ public class RankedGrid extends GridValues {
      * @param sideLength board size is sideLength * sideLength
      */
     public RankedGrid(int sideLength) {
-        super(sideLength);
         maxHeap = new PriorityQueue(sideLength * sideLength, new RankComparator());
     }
     

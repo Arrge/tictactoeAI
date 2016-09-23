@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import tictactoeai.AI.AI;
+import tictactoeai.AI.SpaceRank;
+import tictactoeai.AI.tools.BoardScanner;
 import tictactoeai.board.GridValues;
 
 /**
@@ -13,10 +15,12 @@ import tictactoeai.board.GridValues;
  */
 public class Grid extends javax.swing.JPanel {
     //false = circle, true = cross
-    private boolean nextMove = true;
+    private short nextMove = 1;
     private GridValues gv = new GridValues(15);
     private final int gridSideLength = 300;
     private AI bob;
+    private Point lastMove;
+    private boolean gameOver;
     /**
      * Creates new form grid
      */
@@ -54,6 +58,9 @@ public class Grid extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        if (gameOver) {
+            return;
+        }
         addMove(evt.getX() / (gridSideLength/gv.getSideLength()), evt.getY() / (gridSideLength/gv.getSideLength()));
         Point p = bob.getMove(gv);
         addMove(p.x, p.y);
@@ -66,9 +73,25 @@ public class Grid extends javax.swing.JPanel {
      */
     public void addMove(int x, int y) {
         gv.setSpace(x, y, nextMove);
-        nextMove = !nextMove;
+        lastMove = new Point(x, y);
+        if (checkWinCondition()) {
+            gameOver = true;
+            System.out.println("rekt");
+        }
+        if (nextMove == 1) {
+            nextMove = 2;
+        }
+        else {
+            nextMove = 1;
+        }
+        
         paint(getGraphics());
         
+    }
+    
+    public boolean checkWinCondition() {
+        SpaceRank sr = BoardScanner.scan(lastMove.x, lastMove.y, gv, nextMove);
+        return sr.calculateRank();
     }
     
     @Override
@@ -76,7 +99,29 @@ public class Grid extends javax.swing.JPanel {
         super.paintComponent(g);
         
         drawGrid(g);
-        drawSymbols(g);       
+        drawSymbols(g);
+        if (lastMove != null) {
+            drawLastMove(g);
+        }
+    }
+    
+    private void drawLastMove(Graphics g) {
+        g.setColor(Color.YELLOW);
+        int x = lastMove.x;
+        int y = lastMove.y;
+        
+        if (gv.getGrid()[x][y] == 1) {
+            x = x * (gridSideLength/gv.getSideLength());
+            y = y * (gridSideLength/gv.getSideLength());
+            g.drawLine(x, y, x+(gridSideLength/gv.getSideLength()), y+(gridSideLength/gv.getSideLength()));
+            g.drawLine(x, y+(gridSideLength/gv.getSideLength()), x+(gridSideLength/gv.getSideLength()), y);
+        } 
+        else if (gv.getGrid()[x][y] == 2) {
+            g.setColor(Color.red);
+            x = x * (gridSideLength/gv.getSideLength());
+            y = y * (gridSideLength/gv.getSideLength());
+            g.drawOval(x, y, (gridSideLength/gv.getSideLength()), (gridSideLength/gv.getSideLength()));
+        }
     }
     
     private void drawGrid(Graphics g) {
@@ -90,13 +135,10 @@ public class Grid extends javax.swing.JPanel {
         g.setColor(Color.black);
         for (int x = 0; x < gv.getSideLength(); x++) {
             for (int y = 0; y < gv.getSideLength(); y++) {
-                if (gv.getGrid()[x][y] == null) {
-                    continue;
-                }
-                else if (gv.getGrid()[x][y] == true) {
+                if (gv.getGrid()[x][y] == 1) {
                     drawCross(x,y,g);
                 }
-                else if (gv.getGrid()[x][y] == false) {
+                else if (gv.getGrid()[x][y] == 2) {
                     drawCircle(x,y,g);
                 }
             }

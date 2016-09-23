@@ -5,7 +5,7 @@ package tictactoeai.board;
  * @author Liekkipipo-pc
  */
 public class GridValues {
-    private Boolean[][] grid;
+    private short[][] grid;
     private int sideLength;
 
     /**
@@ -13,7 +13,7 @@ public class GridValues {
      * @param sideLength the grid size is sideLength * sideLength
      */
     public GridValues(int sideLength) {
-        this.grid = new Boolean[sideLength][sideLength];
+        this.grid = new short[sideLength][sideLength];
         this.sideLength = sideLength;
     }
     
@@ -25,8 +25,8 @@ public class GridValues {
      * @param mark true for cross, false for circle
      * @return returns false if space has a mark
      */
-    public boolean setSpace(int x, int y, boolean mark) {
-        if (grid[x][y] != null) {
+    public boolean setSpace(int x, int y, short mark) {
+        if (grid[x][y] != 0) {
             return false;
         }
         grid[x][y] = mark;
@@ -39,17 +39,20 @@ public class GridValues {
      * @param y
      * @return returns the value of space
      */
-    public boolean isUnset(int x, int y) {
-        return (grid[x][y] == null);
+    public boolean isEmpty(int x, int y) {
+        return grid[x][y] == 0;
     }
     
     /**
-     * gets the current mark of the space
+     * gets the mark of the space
      * @param x
      * @param y
-     * @return returns the current mark of the space
+     * @return returns the mark of the space or 3 if outside of board
      */
-    public Boolean getMark(int x, int y) {
+    public short getMark(int x, int y) {
+        if (x < 0 || y < 0 || x >= sideLength || y >= sideLength) {
+            return 3;
+        }
         return grid[x][y];
     }
 
@@ -65,7 +68,7 @@ public class GridValues {
      *
      * @return
      */
-    public Boolean[][] getGrid() {
+    public short[][] getGrid() {
         return grid;
     }
 }

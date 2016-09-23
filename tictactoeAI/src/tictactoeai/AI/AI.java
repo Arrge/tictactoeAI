@@ -11,13 +11,13 @@ import tictactoeai.board.GridValues;
  */
 public class AI {
     private RankedGrid rg;
-    private boolean mark;
+    private final short mark;
 
     /**
      * 
-     * @param mark true = cross, false = circle
+     * @param mark 1 = cross, 2 = circle
      */
-    public AI(boolean mark) {
+    public AI(short mark) {
         this.rg = new RankedGrid(15);
         this.mark = mark;
     }
@@ -28,32 +28,38 @@ public class AI {
      * @return returns x,y coordinates for the next move
      */
     public Point getMove(GridValues grid) {
-        SpaceRank sr, srEnemy;
+        SpaceRank sr;
+        int x, y;
+        
         rg = new RankedGrid(15);
+        
         for (int i = 0; i < grid.getSideLength() * grid.getSideLength(); i++) {
-            sr = new SpaceRank(i % (grid.getSideLength()), i / (grid.getSideLength()));
-            srEnemy = new SpaceRank(i % (grid.getSideLength()), i / (grid.getSideLength()));
-            
-            BoardScanner.calculateRank(sr, grid, mark);
-            BoardScanner.calculateRank(srEnemy, grid, !mark);
-            sr.calculateRank();
-            if (sr.getX() == 9 && sr.getY() == 3) {
-                System.out.println("asd");
+            x = i % (grid.getSideLength());
+            y = i / (grid.getSideLength());
+
+            if (!grid.isEmpty(x, y)) {
+                continue;
             }
-            srEnemy.calculateRank();
-            sr.addToRank(srEnemy.getRank());
+            sr = BoardScanner.scan(x, y, grid, mark);
+            
+            if (sr.calculateRank() == true) {
+                return new Point(sr.getX(), sr.getY());
+            }
+            
+            
+            sr.calculateOpponentsRank();
             rg.addSpaceRank(sr);
         }
         sr = rg.getBestMove();
-        Point p = new Point(sr.getX(), sr.getY());
-        return p;
+        
+        return new Point(sr.getX(), sr.getY());
     }
     
     /**
      * 
      * @return return the mark of the AI (cross/circle)
      */
-    public boolean getMark() {
+    public short getMark() {
         return mark;
     }
 }
