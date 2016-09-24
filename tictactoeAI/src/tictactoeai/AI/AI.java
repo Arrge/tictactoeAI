@@ -57,7 +57,7 @@ public class AI {
     
     /**
      * 
-     * @return return the mark of the AI (cross/circle)
+     * @return return the mark of the AI (1 = cross 2 = circle)
      */
     public short getMark() {
         return mark;

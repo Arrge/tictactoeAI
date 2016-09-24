@@ -8,6 +8,15 @@ import tictactoeai.board.GridValues;
  * @author Liekkipipo-pc
  */
 public class BoardScanner {
+
+    /**
+     * scan adjacent spaces 
+     * @param x coordinate
+     * @param y coordinate
+     * @param grid board
+     * @param mark 1 = cross, 2 = circle 0 = empty
+     * @return SpaceRank with the required information to calculate the rank
+     */
     public static SpaceRank scan(int x, int y, GridValues grid, short mark) {
         SpaceRank sr = new SpaceRank(x, y);
         
@@ -31,6 +40,12 @@ public class BoardScanner {
         return sr;
     }
     
+    /**
+     * scan adjacent spaces horizontally 
+     * @param sr
+     * @param grid board
+     * @param mark 1 = cross, 2 = circle 0 = empty
+     */
     public static void horizontalScan(SpaceRank sr, GridValues grid, short mark) {
         int x = sr.getX();
         int y = sr.getY();
@@ -66,6 +81,12 @@ public class BoardScanner {
         
     }
     
+    /**
+     * scan adjacent spaces vertically
+     * @param sr
+     * @param grid board
+     * @param mark 1 = cross, 2 = circle 0 = empty
+     */
     public static void verticalScan(SpaceRank sr, GridValues grid, short mark) {
         int x = sr.getX();
         int y = sr.getY();
@@ -102,6 +123,12 @@ public class BoardScanner {
         
     }
     
+    /**
+     * scan adjacent spaces diagonally top right to bottom left
+     * @param sr
+     * @param grid board
+     * @param mark 1 = cross, 2 = circle 0 = empty
+     */
     public static void diagonalRightLeftScan(SpaceRank sr, GridValues grid, short mark) {
         int x = sr.getX();
         int y = sr.getY();
@@ -137,6 +164,12 @@ public class BoardScanner {
         sr.setOpenSidesAndConsecutives(opensides, consecutives);
     }
     
+    /** 
+     * scan adjacent spaces diagonally top left to bottom right
+     * @param sr 
+     * @param grid board
+     * @param mark 1 = cross, 2 = circle 0 = empty
+     */
     public static void diagonalLeftRightScan(SpaceRank sr, GridValues grid, short mark) {
         int x = sr.getX();
         int y = sr.getY();

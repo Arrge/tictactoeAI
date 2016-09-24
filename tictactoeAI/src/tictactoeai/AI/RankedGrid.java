@@ -2,7 +2,6 @@
 package tictactoeai.AI;
 
 import java.util.PriorityQueue;
-import tictactoeai.board.GridValues;
 
 /**
  *
@@ -12,7 +11,7 @@ public class RankedGrid {
     private PriorityQueue<SpaceRank> maxHeap;
     
     /**
-     * 
+     * a maximum heap containing the ranks of every space
      * @param sideLength board size is sideLength * sideLength
      */
     public RankedGrid(int sideLength) {
@@ -20,7 +19,7 @@ public class RankedGrid {
     }
     
     /**
-     * 
+     * add SpaceRank to the heap
      * @param sr space rank
      */
     public void addSpaceRank(SpaceRank sr) {

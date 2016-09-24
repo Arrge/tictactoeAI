@@ -15,19 +15,25 @@ import tictactoeai.board.GridValues;
  */
 public class Grid extends javax.swing.JPanel {
     //false = circle, true = cross
-    private short nextMove = 1;
-    private GridValues gv = new GridValues(15);
+    private short nextMove;
+    private GridValues gv;
     private final int gridSideLength = 300;
     private AI bob;
     private Point lastMove;
     private boolean gameOver;
+    private int moves;
     /**
      * Creates new form grid
      */
     public Grid() {
+        moves = 0;
+        nextMove = 1;
+        gv = new GridValues(15);
         bob = new AI(nextMove);
         addMove(7,7);
         initComponents();
+        gameOver = false;
+        
     }
 
     /**
@@ -39,6 +45,7 @@ public class Grid extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setForeground(new java.awt.Color(51, 51, 51));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -72,6 +79,10 @@ public class Grid extends javax.swing.JPanel {
      * @param y y coordinate
      */
     public void addMove(int x, int y) {
+        if (x > 14 || y > 14 || x < 0 || y < 0 || !gv.isEmpty(x, y)) {
+            return;
+        }
+        moves++;
         gv.setSpace(x, y, nextMove);
         lastMove = new Point(x, y);
         if (checkWinCondition()) {
@@ -106,7 +117,7 @@ public class Grid extends javax.swing.JPanel {
     }
     
     private void drawLastMove(Graphics g) {
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.green);
         int x = lastMove.x;
         int y = lastMove.y;
         
@@ -169,7 +180,19 @@ public class Grid extends javax.swing.JPanel {
     }
 
     
-    
+    public void reset() {
+        removeAll();
+        nextMove = 1;
+        moves = 0;
+        gv = new GridValues(15);
+        bob = new AI(nextMove);
+        addMove(7,7);
+        gameOver = false;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

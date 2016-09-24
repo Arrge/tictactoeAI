@@ -11,7 +11,7 @@ public class RankComparator implements Comparator<SpaceRank>
 {
 
     /**
-     * compare two ranks
+     * compare two spaces
      * @param x SpaceRank
      * @param y SpaceRank
      * @return returns the higher ranked space
@@ -20,9 +20,9 @@ public class RankComparator implements Comparator<SpaceRank>
     public int compare(SpaceRank x, SpaceRank y)
     {
         //x > y = positive return value
-        if (x.isForcedMove() - y.isForcedMove() == 0) {
-            if (x.isWinningMove() - y.isWinningMove() == 0)  {
-                if (x.isEnemyWinningMove() - y.isEnemyWinningMove() == 0) {
+        if (y.isForcedMove() - x.isForcedMove() == 0) {
+            if (y.isWinningMove() - x.isWinningMove() == 0)  {
+                if (y.isEnemyWinningMove() - x.isEnemyWinningMove() == 0) {
                     return y.getTotalRank() - x.getTotalRank();
                 }
                 else {
