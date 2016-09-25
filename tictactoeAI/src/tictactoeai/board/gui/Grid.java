@@ -179,7 +179,10 @@ public class Grid extends javax.swing.JPanel {
         return gv;
     }
 
-    
+    /**
+     *  reset the board
+     * 
+     */
     public void reset() {
         removeAll();
         nextMove = 1;

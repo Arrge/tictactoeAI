@@ -32,31 +32,5 @@ public class RankedGridTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of addSpaceRank method, of class RankedGrid.
-     */
-    @Test
-    public void testAddSpaceRank() {
-        System.out.println("addSpaceRank");
-        SpaceRank sr = null;
-        RankedGrid instance = null;
-        instance.addSpaceRank(sr);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getBestMove method, of class RankedGrid.
-     */
-    @Test
-    public void testGetBestMove() {
-        System.out.println("getBestMove");
-        RankedGrid instance = null;
-        SpaceRank expResult = null;
-        SpaceRank result = instance.getBestMove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
+   
 }

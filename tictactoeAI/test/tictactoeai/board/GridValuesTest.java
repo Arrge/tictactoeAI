@@ -40,73 +40,44 @@ public class GridValuesTest {
         System.out.println("setSpace");
         int x = 0;
         int y = 0;
-        short mark = 0;
-        GridValues instance = null;
+        short mark = 1;
+        GridValues instance = new GridValues(15);
+        instance.setSpace(x, y, mark);
         boolean expResult = false;
-        boolean result = instance.setSpace(x, y, mark);
+        boolean result = instance.isEmpty(x, y);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
      * Test of isEmpty method, of class GridValues.
      */
     @Test
-    public void testIsEmpty() {
+    public void testIsEmpty1() {
         System.out.println("isEmpty");
         int x = 0;
         int y = 0;
-        GridValues instance = null;
+        GridValues instance = new GridValues(15);
+        instance.setSpace(10, y, (short)1);
+        boolean expResult = true;
+        boolean result = instance.isEmpty(x, y);
+        assertEquals(expResult, result);
+       
+    }
+
+    /**
+     * Test of isEmpty method, of class GridValues.
+     */
+    @Test
+    public void testIsEmpty2() {
+        System.out.println("isEmpty");
+        int x = 0;
+        int y = 0;
+        GridValues instance = new GridValues(15);
+        instance.setSpace(x, y, (short)1);
         boolean expResult = false;
         boolean result = instance.isEmpty(x, y);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
-
-    /**
-     * Test of getMark method, of class GridValues.
-     */
-    @Test
-    public void testGetMark() {
-        System.out.println("getMark");
-        int x = 0;
-        int y = 0;
-        GridValues instance = null;
-        short expResult = 0;
-        short result = instance.getMark(x, y);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getSideLength method, of class GridValues.
-     */
-    @Test
-    public void testGetSideLength() {
-        System.out.println("getSideLength");
-        GridValues instance = null;
-        int expResult = 0;
-        int result = instance.getSideLength();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getGrid method, of class GridValues.
-     */
-    @Test
-    public void testGetGrid() {
-        System.out.println("getGrid");
-        GridValues instance = null;
-        short[][] expResult = null;
-        short[][] result = instance.getGrid();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }

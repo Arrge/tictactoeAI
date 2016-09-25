@@ -55,7 +55,12 @@ public class SpaceRank {
                 return true;
             }
             else {
-                rank += consecutives[i] + (openSides[i]/2);
+                if (consecutives[i] > 0) {
+                    rank += consecutives[i] + (openSides[i]/2);
+                }
+                else {
+                    rank += consecutives[i];
+                }
             }
         } 
         
@@ -79,7 +84,13 @@ public class SpaceRank {
                 break;
             }
             else {
-                opponentsRank += consecutives[i] + (openSides[i]/2);
+                if (consecutives[i] > 0) {
+                    opponentsRank += consecutives[i] + (openSides[i]/2);
+                }
+                else {
+                    opponentsRank += consecutives[i];
+                }
+                
             }
         }
     }

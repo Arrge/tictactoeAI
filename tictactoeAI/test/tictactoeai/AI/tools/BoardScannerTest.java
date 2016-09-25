@@ -38,73 +38,87 @@ public class BoardScannerTest {
      * Test of scan method, of class BoardScanner.
      */
     @Test
-    public void testScan() {
+    public void testScan1() {
         System.out.println("scan");
         int x = 0;
         int y = 0;
-        GridValues grid = null;
-        short mark = 0;
-        SpaceRank expResult = null;
+        GridValues grid = new GridValues(15);
+        short mark = 1;
+        grid.setSpace(1, y, mark);
+        grid.setSpace(2, y, mark);
+        grid.setSpace(3, y, mark);
+        grid.setSpace(4, y, mark);
         SpaceRank result = BoardScanner.scan(x, y, grid, mark);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of horizontalScan method, of class BoardScanner.
-     */
-    @Test
-    public void testHorizontalScan() {
-        System.out.println("horizontalScan");
-        SpaceRank sr = null;
-        GridValues grid = null;
-        short mark = 0;
-        BoardScanner.horizontalScan(sr, grid, mark);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of verticalScan method, of class BoardScanner.
-     */
-    @Test
-    public void testVerticalScan() {
-        System.out.println("verticalScan");
-        SpaceRank sr = null;
-        GridValues grid = null;
-        short mark = 0;
-        BoardScanner.verticalScan(sr, grid, mark);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of diagonalRightLeftScan method, of class BoardScanner.
-     */
-    @Test
-    public void testDiagonalRightLeftScan() {
-        System.out.println("diagonalRightLeftScan");
-        SpaceRank sr = null;
-        GridValues grid = null;
-        short mark = 0;
-        BoardScanner.diagonalRightLeftScan(sr, grid, mark);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of diagonalLeftRightScan method, of class BoardScanner.
-     */
-    @Test
-    public void testDiagonalLeftRightScan() {
-        System.out.println("diagonalLeftRightScan");
-        SpaceRank sr = null;
-        GridValues grid = null;
-        short mark = 0;
-        BoardScanner.diagonalLeftRightScan(sr, grid, mark);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(true, result.calculateRank());
     }
     
+    /**
+     * Test of scan method, of class BoardScanner.
+     */
+    @Test
+    public void testScan4() {
+        System.out.println("scan");
+        int x = 0;
+        int y = 0;
+        GridValues grid = new GridValues(15);
+        short mark = 1;
+        grid.setSpace(1, 1, mark);
+        grid.setSpace(2, 2, mark);
+        grid.setSpace(3, 3, mark);
+        grid.setSpace(4, 4, mark);
+        SpaceRank result = BoardScanner.scan(x, y, grid, mark);
+        assertEquals(true, result.calculateRank());
+    }
+    
+    /**
+     * Test of scan method, of class BoardScanner.
+     */
+    @Test
+    public void testScan2() {
+        System.out.println("scan");
+        int x = 0;
+        int y = 0;
+        GridValues grid = new GridValues(15);
+        short mark = 1;
+        grid.setSpace(1, y, mark);
+        grid.setSpace(2, y, mark);
+        grid.setSpace(3, y, mark);
+        SpaceRank result = BoardScanner.scan(x, y, grid, mark);
+        assertEquals(false, result.calculateRank());
+        assertEquals(3, result.getRank());
+    }
+    /**
+     * Test of scan method, of class BoardScanner.
+     */
+    @Test
+    public void testScan3() {
+        System.out.println("scan");
+        int x = 5;
+        int y = 0;
+        GridValues grid = new GridValues(15);
+        short mark = 1;
+        grid.setSpace(2, y, mark);
+        grid.setSpace(3, y, mark);
+        grid.setSpace(4, y, mark);
+        SpaceRank result = BoardScanner.scan(x, y, grid, mark);
+        assertEquals(false, result.calculateRank());
+        assertEquals(4, result.getRank());
+    }
+    /**
+     * Test of scan method, of class BoardScanner.
+     */
+    @Test
+    public void testScan5() {
+        System.out.println("scan");
+        int x = 5;
+        int y = 5;
+        GridValues grid = new GridValues(15);
+        short mark = 1;
+        grid.setSpace(2, 2, mark);
+        grid.setSpace(3, 3, mark);
+        grid.setSpace(4, 4, mark);
+        SpaceRank result = BoardScanner.scan(x, y, grid, mark);
+        assertEquals(false, result.calculateRank());
+        assertEquals(4, result.getRank());
+    }
 }

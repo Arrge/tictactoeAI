@@ -54,7 +54,7 @@ public class SpaceRankTest {
     @Test
     public void testCalculateRank() {
         System.out.println("calculateRank");
-         int openSides = 2;
+        int openSides = 2;
         int consecutives = 3;
         SpaceRank instance = new SpaceRank(0, 0);
         instance.setOpenSidesAndConsecutives(openSides, consecutives);
@@ -70,122 +70,17 @@ public class SpaceRankTest {
     @Test
     public void testCalculateOpponentsRank() {
         System.out.println("calculateOpponentsRank");
-        SpaceRank instance = null;
+        int openSides = 2;
+        int consecutives = 3;
+        SpaceRank instance = new SpaceRank(0, 0);
+        instance.setOpenSidesAndConsecutives(openSides, consecutives);
+        instance.setOpenSidesAndConsecutives(openSides, consecutives);
+        instance.setOpenSidesAndConsecutives(openSides, consecutives);
+        instance.setOpenSidesAndConsecutives(openSides, consecutives);
+        instance.setOpenSidesAndConsecutives(openSides, consecutives);
+        
         instance.calculateOpponentsRank();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(4, instance.opponentsRank);
     }
-
-    /**
-     * Test of getX method, of class SpaceRank.
-     */
-    @Test
-    public void testGetX() {
-        System.out.println("getX");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.getX();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getY method, of class SpaceRank.
-     */
-    @Test
-    public void testGetY() {
-        System.out.println("getY");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.getY();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getRank method, of class SpaceRank.
-     */
-    @Test
-    public void testGetRank() {
-        System.out.println("getRank");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.getRank();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getOpponentsRank method, of class SpaceRank.
-     */
-    @Test
-    public void testGetOpponentsRank() {
-        System.out.println("getOpponentsRank");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.getOpponentsRank();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getTotalRank method, of class SpaceRank.
-     */
-    @Test
-    public void testGetTotalRank() {
-        System.out.println("getTotalRank");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.getTotalRank();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isForcedMove method, of class SpaceRank.
-     */
-    @Test
-    public void testIsForcedMove() {
-        System.out.println("isForcedMove");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.isForcedMove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isWinningMove method, of class SpaceRank.
-     */
-    @Test
-    public void testIsWinningMove() {
-        System.out.println("isWinningMove");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.isWinningMove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isEnemyWinningMove method, of class SpaceRank.
-     */
-    @Test
-    public void testIsEnemyWinningMove() {
-        System.out.println("isEnemyWinningMove");
-        SpaceRank instance = null;
-        int expResult = 0;
-        int result = instance.isEnemyWinningMove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }
