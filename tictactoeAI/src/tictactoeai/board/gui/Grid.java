@@ -69,6 +69,9 @@ public class Grid extends javax.swing.JPanel {
             return;
         }
         addMove(evt.getX() / (gridSideLength/gv.getSideLength()), evt.getY() / (gridSideLength/gv.getSideLength()));
+        if (gameOver) {
+            return;
+        }
         Point p = bob.getMove(gv);
         addMove(p.x, p.y);
     }//GEN-LAST:event_formMouseClicked
@@ -117,7 +120,7 @@ public class Grid extends javax.swing.JPanel {
     }
     
     private void drawLastMove(Graphics g) {
-        g.setColor(Color.green);
+        g.setColor(Color.magenta);
         int x = lastMove.x;
         int y = lastMove.y;
         
@@ -184,7 +187,7 @@ public class Grid extends javax.swing.JPanel {
      * 
      */
     public void reset() {
-        removeAll();
+        getGraphics().clearRect(0, 0, 300, 300);
         nextMove = 1;
         moves = 0;
         gv = new GridValues(15);

@@ -10,50 +10,103 @@ import tictactoeai.board.GridValues;
  * @author Liekkipipo-pc
  */
 public class AI {
-    private RankedGrid rg;
     private final short mark;
-
+    private int maxBestMoves = 5;
+    private int maxDepth = 1;
     /**
      * 
      * @param mark 1 = cross, 2 = circle
      */
     public AI(short mark) {
-        this.rg = new RankedGrid(15);
         this.mark = mark;
     }
     
-    /**
-     * gets the next move for the AI
-     * @param grid the board
-     * @return returns x,y coordinates for the next move
-     */
-    public Point getMove(GridValues grid) {
+    public Point getMove(GridValues gv) {
+        SpaceRank[] srList = getMoves(gv);
+        SpaceRank[] moves;
+        //ranked by current board rank + enemy best move rank
+        moves = getEnemyMoves(gv, srList);
+        
+        SpaceRank move = bestMove(moves);
+        return new Point(move.getX(), move.getY());
+    }
+    
+    public SpaceRank bestMove(SpaceRank[] moves) {
+        SpaceRank bestMove = moves[0];
+        
+        for (int i = 1; i < moves.length && moves[i] != null;i++) {
+            if (bestMove.getTotalRank() < moves[i].getTotalRank()) {
+                bestMove = moves[i];
+            }
+        }
+        
+        return bestMove;
+    }
+    
+    public SpaceRank[] getEnemyMoves(GridValues gv, SpaceRank[] srList) {    
+        SpaceRank[] enemySRList;
+        GridValues newGridValues;
+        
+        for (int i = 0; i < srList.length && srList[i] != null; i++) {
+            srList[i].setMoveOnGrid(gv, mark);
+            newGridValues = srList[i].getGridValues();
+            
+            enemySRList = getMoves(newGridValues);
+            enemySRList[0].setMoveOnGrid(newGridValues, getOppositeMark());
+            srList[i].setGrid(enemySRList[0].getGridValues());
+            srList[i].addToFutureMovesRank(enemySRList[0].getTotalRank());
+        }
+        
+        return srList;
+    }
+    
+    
+    public RankedGrid rankMoves(GridValues gv) {
         SpaceRank sr;
+        RankedGrid rg = new RankedGrid(15);
         int x, y;
         
-        rg = new RankedGrid(15);
-        
-        for (int i = 0; i < grid.getSideLength() * grid.getSideLength(); i++) {
-            x = i % (grid.getSideLength());
-            y = i / (grid.getSideLength());
+        for (int i = 0; i < gv.getSideLength() * gv.getSideLength(); i++) {
+            x = i % (gv.getSideLength());
+            y = i / (gv.getSideLength());
 
-            if (!grid.isEmpty(x, y)) {
+            if (!gv.isEmpty(x, y)) {
                 continue;
             }
-            sr = BoardScanner.scan(x, y, grid, mark);
+            sr = BoardScanner.scan(x, y, gv, mark);
             
-            if (sr.calculateRank() == true) {
-                return new Point(sr.getX(), sr.getY());
-            }
-            
-            
+            sr.calculateRank();
             sr.calculateOpponentsRank();
-            rg.addSpaceRank(sr);
+            if (sr.getTotalRank() > 0) {
+                rg.addSpaceRank(sr);
+            }
         }
-        sr = rg.getBestMove();
         
-        return new Point(sr.getX(), sr.getY());
+        return rg;
     }
+   
+    public SpaceRank[] getMoves(GridValues gv) {
+        RankedGrid rg = rankMoves(gv);
+        SpaceRank sr = rg.getBestMove();
+        if (sr == null) {
+            System.out.println("no available moves????");
+        }
+
+        SpaceRank[] srList = new SpaceRank[maxBestMoves];
+        srList[0] = sr;
+
+        for (int i = 1; i < srList.length && rg.heapSize()> 0; i++) {
+            sr = rg.getBestMove();
+            if (srList[0].getTotalRank() - sr.getTotalRank() > 10) {
+                break;
+            }
+            srList[i] = sr;
+        }
+
+        return srList;
+    }
+    
+    
     
     /**
      * 
@@ -61,5 +114,14 @@ public class AI {
      */
     public short getMark() {
         return mark;
+    }
+    
+    public short getOppositeMark() {
+        if (mark == 1) {
+            return 2;
+        } 
+        else {
+            return 1;
+        }
     }
 }

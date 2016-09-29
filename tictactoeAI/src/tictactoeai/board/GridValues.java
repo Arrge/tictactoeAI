@@ -17,7 +17,18 @@ public class GridValues {
         this.sideLength = sideLength;
     }
     
-    
+    public GridValues cloneGrid() {
+        GridValues newGridValues = new GridValues(sideLength);
+        short[][] newGrid = new short[sideLength][sideLength];
+        
+        for (int i = 0; i < sideLength; i++) {
+            for (int j = 0; j < sideLength; j++) {
+                newGrid[i][j] = grid[i][j];
+            }
+        }
+        newGridValues.setGrid(newGrid);
+        return newGridValues;
+    }
     /**
      * Set the mark of a unset space
      * @param x 
@@ -71,4 +82,10 @@ public class GridValues {
     public short[][] getGrid() {
         return grid;
     }
+    
+    public void setGrid(short[][] grid) {
+        this.grid = grid;
+    }
+    
+    
 }

@@ -33,4 +33,8 @@ public class RankedGrid {
     public SpaceRank getBestMove() {
         return maxHeap.poll();
     }
+    
+    public int heapSize() {
+        return maxHeap.size();
+    }
 }

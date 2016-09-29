@@ -1,5 +1,7 @@
 package tictactoeai.AI;
 
+import tictactoeai.board.GridValues;
+
 /**
  * 
  * @author Liekkipipo-pc
@@ -8,8 +10,9 @@ public class SpaceRank {
     int x, y;
     int rank;
     int opponentsRank;
+    int futureMovesRank;
     int index;
-    
+    GridValues gv;
     int[] consecutives;
     int[] openSides;
     int forcedMove;
@@ -50,9 +53,10 @@ public class SpaceRank {
             sum = consecutives[i] + openSides[i];
             if (sum == 5) {
                 winningMove = 1;
+                rank += 30;
             }
             if(consecutives[i] >= 4 || sum > 5) {
-                return true;
+                rank += 30000;
             }
             else {
                 if (consecutives[i] > 0) {
@@ -64,7 +68,7 @@ public class SpaceRank {
             }
         } 
         
-        return false;
+        return rank >= 30000;
     }
     
     /**
@@ -78,9 +82,11 @@ public class SpaceRank {
             
             if (sum == 5 && winningMove == 0) {
                 enemyWinningMove = 1;
+                opponentsRank += 30;
             }
             if (consecutives[i] >= 4 || sum > 5) {
                 forcedMove = 1;
+                opponentsRank += 30000;
                 break;
             }
             else {
@@ -119,6 +125,19 @@ public class SpaceRank {
         return rank;
     }
 
+    public void setGrid(GridValues gv) {
+        this.gv = gv.cloneGrid();
+    }
+
+    
+    
+    public void setMoveOnGrid(GridValues gv, short mark) {
+        this.gv = gv.cloneGrid();
+        this.gv.setSpace(x, y, mark);
+    }
+
+    
+    
     /**
      *
      * @return
@@ -132,7 +151,7 @@ public class SpaceRank {
      * @return opponents rank + rank
      */
     public int getTotalRank() {
-        return rank + opponentsRank;
+        return rank + opponentsRank + futureMovesRank;
     }
 
     /**
@@ -157,5 +176,13 @@ public class SpaceRank {
      */
     public int isEnemyWinningMove() {
         return enemyWinningMove;
+    }
+
+    public GridValues getGridValues() {
+        return gv;
+    }
+
+    public void addToFutureMovesRank(int futureMovesRank) {
+        this.futureMovesRank += futureMovesRank;
     }
 }
