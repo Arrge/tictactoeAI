@@ -56,6 +56,7 @@ public class SpaceRank {
                 rank += 30;
             }
             if(consecutives[i] >= 4 || sum > 5) {
+                forcedMove = 1;
                 rank += 30000;
             }
             else {

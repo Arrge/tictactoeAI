@@ -2,8 +2,10 @@
 package tictactoeai.board.gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+
 import tictactoeai.AI.AI;
 import tictactoeai.AI.SpaceRank;
 import tictactoeai.AI.tools.BoardScanner;
@@ -22,6 +24,7 @@ public class Grid extends javax.swing.JPanel {
     private Point lastMove;
     private boolean gameOver;
     private int moves;
+    private int difficulty;
     /**
      * Creates new form grid
      */
@@ -64,16 +67,28 @@ public class Grid extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void changeAIDifficulty(int depth) {
+        difficulty = depth;
+        bob.setMaxDepth(depth);
+    }
+    
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         if (gameOver) {
             return;
         }
         addMove(evt.getX() / (gridSideLength/gv.getSideLength()), evt.getY() / (gridSideLength/gv.getSideLength()));
         if (gameOver) {
+            drawWon(getGraphics());
+            
             return;
         }
         Point p = bob.getMove(gv);
         addMove(p.x, p.y);
+        if (gameOver) {
+            
+            drawLost(getGraphics());
+        }
     }//GEN-LAST:event_formMouseClicked
     
     /**
@@ -117,6 +132,19 @@ public class Grid extends javax.swing.JPanel {
         if (lastMove != null) {
             drawLastMove(g);
         }
+       
+    }
+    
+    private void drawLost(Graphics g) {
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
+        g.setColor(Color.red);
+        g.drawString("you lost!", 100, 60);
+    }
+    
+    private void drawWon(Graphics g) {
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
+        g.setColor(Color.red);
+        g.drawString("you won!", 100, 60);
     }
     
     private void drawLastMove(Graphics g) {
