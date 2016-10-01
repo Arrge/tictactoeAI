@@ -5,25 +5,30 @@ package tictactoeai.board;
  * @author Liekkipipo-pc
  */
 public class GridValues {
-    private short[][] grid;
-    private int sideLength;
-
+    int[][] grid;
+    int sideLength;
+    int setValues;
     /**
      * 
      * @param sideLength the grid size is sideLength * sideLength
      */
     public GridValues(int sideLength) {
-        this.grid = new short[sideLength][sideLength];
+        this.grid = new int[sideLength][sideLength];
         this.sideLength = sideLength;
+        setValues = 0;
     }
     
+    /**
+     * 
+     * @return returns a copy of the grid
+     */
     public GridValues cloneGrid() {
         GridValues newGridValues = new GridValues(sideLength);
-        short[][] newGrid = new short[sideLength][sideLength];
-        
+        int[][] newGrid = new int[sideLength][sideLength];
+        newGridValues.setValues = setValues;
         for (int i = 0; i < sideLength; i++) {
             for (int j = 0; j < sideLength; j++) {
-                newGrid[i][j] = grid[i][j];
+                newGrid[i][j] = this.grid[i][j];
             }
         }
         newGridValues.setGrid(newGrid);
@@ -36,17 +41,18 @@ public class GridValues {
      * @param mark true for cross, false for circle
      * @return returns false if space has a mark
      */
-    public boolean setSpace(int x, int y, short mark) {
+    public boolean setSpace(int x, int y, int mark) {
         if (grid[x][y] != 0) {
             return false;
         }
+        setValues++;
         grid[x][y] = mark;
         return true;
     }
     
     /**
      * check if space is set
-     * @param x
+     * @param x 
      * @param y
      * @return returns the value of space
      */
@@ -60,7 +66,7 @@ public class GridValues {
      * @param y
      * @return returns the mark of the space or 3 if outside of board
      */
-    public short getMark(int x, int y) {
+    public int getMark(int x, int y) {
         if (x < 0 || y < 0 || x >= sideLength || y >= sideLength) {
             return 3;
         }
@@ -79,11 +85,15 @@ public class GridValues {
      *
      * @return
      */
-    public short[][] getGrid() {
+    public int[][] getGrid() {
         return grid;
     }
     
-    public void setGrid(short[][] grid) {
+    /**
+     *
+     * @param grid
+     */
+    public void setGrid(int[][] grid) {
         this.grid = grid;
     }
     

@@ -17,7 +17,7 @@ public class BoardScanner {
      * @param mark 1 = cross, 2 = circle 0 = empty
      * @return SpaceRank with the required information to calculate the rank
      */
-    public static SpaceRank scan(int x, int y, GridValues grid, short mark) {
+    public static SpaceRank scan(int x, int y, GridValues grid, int mark) {
         SpaceRank sr = new SpaceRank(x, y);
         
         horizontalScan(sr, grid, mark);
@@ -46,7 +46,7 @@ public class BoardScanner {
      * @param grid board
      * @param mark 1 = cross, 2 = circle 0 = empty
      */
-    public static void horizontalScan(SpaceRank sr, GridValues grid, short mark) {
+    private static void horizontalScan(SpaceRank sr, GridValues grid, int mark) {
         int x = sr.getX();
         int y = sr.getY();
         int consecutives = 0;
@@ -87,7 +87,7 @@ public class BoardScanner {
      * @param grid board
      * @param mark 1 = cross, 2 = circle 0 = empty
      */
-    public static void verticalScan(SpaceRank sr, GridValues grid, short mark) {
+    private static void verticalScan(SpaceRank sr, GridValues grid, int mark) {
         int x = sr.getX();
         int y = sr.getY();
         int consecutives = 0;
@@ -129,7 +129,7 @@ public class BoardScanner {
      * @param grid board
      * @param mark 1 = cross, 2 = circle 0 = empty
      */
-    public static void diagonalRightLeftScan(SpaceRank sr, GridValues grid, short mark) {
+    private static void diagonalRightLeftScan(SpaceRank sr, GridValues grid, int mark) {
         int x = sr.getX();
         int y = sr.getY();
         int consecutives = 0;
@@ -170,13 +170,13 @@ public class BoardScanner {
      * @param grid board
      * @param mark 1 = cross, 2 = circle 0 = empty
      */
-    public static void diagonalLeftRightScan(SpaceRank sr, GridValues grid, short mark) {
+    private static void diagonalLeftRightScan(SpaceRank sr, GridValues grid, int mark) {
         int x = sr.getX();
         int y = sr.getY();
         int consecutives = 0;
         int opensides = 0;
         
-         for (int distance = 1; distance < 5; distance++) {
+        for (int distance = 1; distance < 5; distance++) {
             if (grid.getMark(x-distance, y+distance) == 0) {
                 opensides++;
                 break;

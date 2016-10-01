@@ -4,7 +4,7 @@
         <vendor>${APPLICATION.VENDOR}</vendor>
         <homepage href="${APPLICATION.HOMEPAGE}"/>
         <description>${APPLICATION.DESC}</description>
-        <description kind="short">${APPLICATION.DESC.SHORT}</description>
+        <description kind="int">${APPLICATION.DESC.int}</description>
         <!--${JNLP.ICONS}-->
         <!--${JNLP.OFFLINE.ALLOWED}-->
     </information>

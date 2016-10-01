@@ -19,23 +19,6 @@ public class RankComparator implements Comparator<SpaceRank>
     @Override
     public int compare(SpaceRank x, SpaceRank y)
     {
-        //x > y = positive return value
-        if (y.isForcedMove() - x.isForcedMove() == 0) {
-            if (y.isWinningMove() - x.isWinningMove() == 0)  {
-                if (y.isEnemyWinningMove() - x.isEnemyWinningMove() == 0) {
-                    return y.getTotalRank() - x.getTotalRank();
-                }
-                else {
-                    return y.isEnemyWinningMove() - x.isEnemyWinningMove();
-                }
-            }
-            else {
-                return y.isWinningMove() - x.isWinningMove();
-            }
-        }
-        else {
-            return y.isForcedMove() - x.isForcedMove();
-        }
-        
+        return y.getTotalRank() - x.getTotalRank();
     }
 }

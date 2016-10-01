@@ -8,19 +8,14 @@ import tictactoeai.board.GridValues;
  */
 public class SpaceRank {
     int x, y;
-    int rank;
-    int opponentsRank;
-    int futureMovesRank;
+    int rank, opponentsRank;
     int index;
     GridValues gv;
     int[] consecutives;
     int[] openSides;
-    int forcedMove;
-    int winningMove;
-    int enemyWinningMove;
-    
+    int rankMultiplier = 6;
     /**
-     * value calculator for a single space
+     * rank calculator for a single space
      * @param x coordinate
      * @param y coordinate
      */
@@ -47,57 +42,35 @@ public class SpaceRank {
      * @return returns true if the move wins the game instantly
      */
     public boolean calculateRank() {
-        //game can be won in (7 - sum) moves if sum >= 5
-        int sum;
         for (int i = 0; i < 4; i++) {
-            sum = consecutives[i] + openSides[i];
-            if (sum == 5) {
-                winningMove = 1;
-                rank += 30;
-            }
-            if(consecutives[i] >= 4 || sum > 5) {
-                forcedMove = 1;
-                rank += 30000;
+            if (consecutives[i] == 4) {
+                    rank += 48 * rankMultiplier;
+                }
+            else if (consecutives[i] + openSides[i] >= 5) {
+                rank += 24 * rankMultiplier;
             }
             else {
-                if (consecutives[i] > 0) {
-                    rank += consecutives[i] + (openSides[i]/2);
-                }
-                else {
-                    rank += consecutives[i];
-                }
+                rank += consecutives[i] * openSides[i] * rankMultiplier;
             }
         } 
         
-        return rank >= 30000;
+        return rank >= 48 * rankMultiplier;
     }
     
     /**
      * calculates the opponents rank for the space after required information has been entered
      */
     public void calculateOpponentsRank() {
-        //game can be won in (7 - sum) moves if sum >= 5
-        int sum; 
+        int sum;
         for (int i = 4; i < 8; i++) {
-            sum = consecutives[i] + openSides[i];
-            
-            if (sum == 5 && winningMove == 0) {
-                enemyWinningMove = 1;
-                opponentsRank += 30;
-            }
-            if (consecutives[i] >= 4 || sum > 5) {
-                forcedMove = 1;
-                opponentsRank += 30000;
-                break;
-            }
+            if (consecutives[i] == 4) {
+                opponentsRank += 36 * rankMultiplier;
+            } 
+            else if (consecutives[i] + openSides[i] >= 5) {
+                opponentsRank += 18 * rankMultiplier;
+            } 
             else {
-                if (consecutives[i] > 0) {
-                    opponentsRank += consecutives[i] + (openSides[i]/2);
-                }
-                else {
-                    opponentsRank += consecutives[i];
-                }
-                
+                opponentsRank += consecutives[i] * openSides[i] * rankMultiplier;
             }
         }
     }
@@ -130,15 +103,11 @@ public class SpaceRank {
         this.gv = gv.cloneGrid();
     }
 
-    
-    
-    public void setMoveOnGrid(GridValues gv, short mark) {
+    public void setMoveOnGrid(GridValues gv, int mark) {
         this.gv = gv.cloneGrid();
         this.gv.setSpace(x, y, mark);
     }
 
-    
-    
     /**
      *
      * @return
@@ -152,38 +121,10 @@ public class SpaceRank {
      * @return opponents rank + rank
      */
     public int getTotalRank() {
-        return rank + opponentsRank + futureMovesRank;
-    }
-
-    /**
-     * does the space have to be filled or the game is lost
-     * @return 
-     */
-    public int isForcedMove() {
-        return forcedMove;
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public int isWinningMove() {
-        return winningMove;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int isEnemyWinningMove() {
-        return enemyWinningMove;
+        return rank + opponentsRank;
     }
 
     public GridValues getGridValues() {
         return gv;
-    }
-
-    public void addToFutureMovesRank(int futureMovesRank) {
-        this.futureMovesRank += futureMovesRank;
     }
 }

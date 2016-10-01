@@ -40,7 +40,7 @@ public class GridValuesTest {
         System.out.println("setSpace");
         int x = 0;
         int y = 0;
-        short mark = 1;
+        int mark = 1;
         GridValues instance = new GridValues(15);
         instance.setSpace(x, y, mark);
         boolean expResult = false;
@@ -58,7 +58,7 @@ public class GridValuesTest {
         int x = 0;
         int y = 0;
         GridValues instance = new GridValues(15);
-        instance.setSpace(10, y, (short)1);
+        instance.setSpace(10, y, (int)1);
         boolean expResult = true;
         boolean result = instance.isEmpty(x, y);
         assertEquals(expResult, result);
@@ -74,7 +74,7 @@ public class GridValuesTest {
         int x = 0;
         int y = 0;
         GridValues instance = new GridValues(15);
-        instance.setSpace(x, y, (short)1);
+        instance.setSpace(x, y, (int)1);
         boolean expResult = false;
         boolean result = instance.isEmpty(x, y);
         assertEquals(expResult, result);

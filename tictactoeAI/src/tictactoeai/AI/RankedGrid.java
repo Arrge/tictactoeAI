@@ -34,6 +34,10 @@ public class RankedGrid {
         return maxHeap.poll();
     }
     
+    /**
+     *
+     * @return
+     */
     public int heapSize() {
         return maxHeap.size();
     }

@@ -10,14 +10,14 @@ import tictactoeai.board.GridValues;
  * @author Liekkipipo-pc
  */
 public class AI {
-    private final short mark;
+    private final int mark;
     private int maxBestMoves = 5;
     private int maxDepth = 2;
     /**
      * 
      * @param mark 1 = cross, 2 = circle
      */
-    public AI(short mark) {
+    public AI(int mark) {
         this.mark = mark;
     }
     
@@ -27,17 +27,17 @@ public class AI {
      * @return returns coordinates of best move
      */
     public Point getMove(GridValues gv) {
-        SpaceRank[] srList = getMoves(gv, mark);
+        SpaceRank[] srList = getMoves(gv);
 
         srList[0].setMoveOnGrid(gv, mark);
         
         int indexOfBestMove = 0;
-        int rankOfBestMove = rankByFutureMoves(srList[0].getGridValues(), 1);
+        int rankOfBestMove = rankByFutureMoves(srList[0].getGridValues(), 1) + srList[0].getTotalRank();
         int comparingRank;
         
         for (int i = 1; i < srList.length && srList[i] != null; i++) {
             srList[i].setMoveOnGrid(gv, mark);
-            comparingRank = rankByFutureMoves(srList[i].getGridValues(), 1);
+            comparingRank = rankByFutureMoves(srList[i].getGridValues(), 1) + srList[i].getTotalRank();
             if (comparingRank > rankOfBestMove) {
                 indexOfBestMove = i;
                 rankOfBestMove = comparingRank;
@@ -53,15 +53,16 @@ public class AI {
      * @param depth iteration
      * @return returns the rank of best future move 
      */
-    public int rankByFutureMoves(GridValues gv, int depth) {
-        short nextMoveMark;
+    private int rankByFutureMoves(GridValues gv, int depth) {
+        int nextMoveMark;
+        int newDepth = 0;
         if (depth % 2 == 0) {
             nextMoveMark = mark;
         } 
         else {
-            nextMoveMark = getOppositeMark();
+            nextMoveMark = getOpponentsMark();
         } 
-        SpaceRank[] srList = getMoves(gv, nextMoveMark);
+        SpaceRank[] srList = getMoves(gv);
         
 
         if (depth >= maxDepth) {
@@ -72,22 +73,68 @@ public class AI {
         int compareRank = 0;
         for (int i = 0; i < srList.length && srList[i] != null; i++) {
             srList[i].setMoveOnGrid(gv, nextMoveMark);
-            compareRank = rankByFutureMoves(srList[i].getGridValues(), depth++);
+            newDepth = depth + 1;
+            compareRank = rankByFutureMoves(srList[i].getGridValues(), newDepth);
             if (compareRank > highestRank) {
                 highestRank = compareRank;
             }
         }
         
-        return highestRank;
+        return highestRank / (depth * 2);
+    }
+    
+    
+   
+    /**
+     * get at most an amount of maxBestMoves moves from the board
+     * @param gv board
+     * @return array of moves
+     */
+    private SpaceRank[] getMoves(GridValues gv) {
+        RankedGrid rg = rankMoves(gv);
+        SpaceRank sr = rg.getBestMove();
+        if (sr == null) {
+            System.out.println("alarm");
+        }
+        SpaceRank[] srList = new SpaceRank[maxBestMoves];
+        srList[0] = sr;
+
+        for (int i = 1; i < srList.length && rg.heapSize()> 0; i++) {
+            sr = rg.getBestMove();
+            if (srList[0].getTotalRank() - sr.getTotalRank() > 10 * 6) {
+                break;
+            }
+            srList[i] = sr;
+        }
+
+        return srList;
+    }
+    
+    /**
+     * get the highest ranked move from an array of moves
+     * @param moves
+     * @return 
+     */
+    private SpaceRank bestMove(SpaceRank[] moves) {
+        SpaceRank bestMove = moves[0];
+        if (bestMove == null) {
+            System.out.println("alarm");
+        }
+        for (int i = 1; i < moves.length && moves[i] != null;i++) {
+            if (bestMove.getTotalRank() < moves[i].getTotalRank()) {
+                bestMove = moves[i];
+            }
+        }
+        
+        return bestMove;
     }
     
     /**
      * rank all possible moves on board
      * @param gv board
-     * @param mark
      * @return returns RankedGrid containing ranked moves 
      */
-    public RankedGrid rankMoves(GridValues gv, short mark) {
+    private RankedGrid rankMoves(GridValues gv) {
         SpaceRank sr;
         RankedGrid rg = new RankedGrid(15);
         int x, y;
@@ -110,61 +157,21 @@ public class AI {
         
         return rg;
     }
-   
-    /**
-     * get at most an amount of maxBestMoves moves from the board
-     * @param gv board 
-     * @param mark
-     * @return array of moves
-     */
-    public SpaceRank[] getMoves(GridValues gv, short mark) {
-        RankedGrid rg = rankMoves(gv, mark);
-        SpaceRank sr = rg.getBestMove();
-
-        SpaceRank[] srList = new SpaceRank[maxBestMoves];
-        srList[0] = sr;
-
-        for (int i = 1; i < srList.length && rg.heapSize()> 0; i++) {
-            sr = rg.getBestMove();
-            if (srList[0].getTotalRank() - sr.getTotalRank() > 10) {
-                break;
-            }
-            srList[i] = sr;
-        }
-
-        return srList;
-    }
     
-    /**
-     * get the highest ranked move from an array of moves
-     * @param moves
-     * @return 
-     */
-    public SpaceRank bestMove(SpaceRank[] moves) {
-        SpaceRank bestMove = moves[0];
-        
-        for (int i = 1; i < moves.length && moves[i] != null;i++) {
-            if (bestMove.getTotalRank() < moves[i].getTotalRank()) {
-                bestMove = moves[i];
-            }
-        }
-        
-        return bestMove;
-    }
     
     /**
      * 
      * @return return the mark of the AI (1 = cross 2 = circle)
      */
-    public short getMark() {
+    public int getMark() {
         return mark;
     }
     
     /**
-     *
-     * @return
+     * 
+     * @return returns opponents mark
      */
-    public short getOppositeMark() {
+    public int getOpponentsMark() {
         if (mark == 1) {
             return 2;
         } 
@@ -173,6 +180,10 @@ public class AI {
         }
     }
 
+    /**
+     * set the max number of moves the AI can think ahead
+     * @param maxDepth
+     */
     public void setMaxDepth(int maxDepth) {
         this.maxDepth = maxDepth;
     }

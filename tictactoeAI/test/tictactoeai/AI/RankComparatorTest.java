@@ -53,34 +53,6 @@ public class RankComparatorTest {
         assertEquals(expResult, result);
     }
     
-    /**
-     * Test of compare method, of class RankComparator.
-     */
-    @Test
-    public void testCompareForcedMoveToWinningMove() {
-        System.out.println("compare");
-        x.forcedMove = 1;
-        y.winningMove = 1;
-        y.enemyWinningMove = 1;
-        RankComparator instance = new RankComparator();
-        int expResult = -1;
-        int result = instance.compare(x, y);
-        assertEquals(expResult, result);
-    }
-    
-    /**
-     * Test of compare method, of class RankComparator.
-     */
-    @Test
-    public void testCompareWinningMoveToEnemyWinningMove() {
-        System.out.println("compare");
-        x.winningMove = 1;
-        y.enemyWinningMove = 1;
-        RankComparator instance = new RankComparator();
-        int expResult = -1;
-        int result = instance.compare(x, y);
-        assertEquals(expResult, result);
-    }
     
     
 }

@@ -61,7 +61,7 @@ public class SpaceRankTest {
         boolean expResult = false;
         boolean result = instance.calculateRank();
         assertEquals(expResult, result);
-        assertEquals(4, instance.rank);
+        assertEquals(144, instance.rank);
     }
 
     /**
@@ -81,6 +81,6 @@ public class SpaceRankTest {
         
         instance.calculateOpponentsRank();
         
-        assertEquals(4, instance.opponentsRank);
+        assertEquals(108, instance.opponentsRank);
     }
 }

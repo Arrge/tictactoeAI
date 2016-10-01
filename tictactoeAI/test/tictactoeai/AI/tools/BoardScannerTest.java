@@ -43,7 +43,7 @@ public class BoardScannerTest {
         int x = 0;
         int y = 0;
         GridValues grid = new GridValues(15);
-        short mark = 1;
+        int mark = 1;
         grid.setSpace(1, y, mark);
         grid.setSpace(2, y, mark);
         grid.setSpace(3, y, mark);
@@ -61,7 +61,7 @@ public class BoardScannerTest {
         int x = 0;
         int y = 0;
         GridValues grid = new GridValues(15);
-        short mark = 1;
+        int mark = 1;
         grid.setSpace(1, 1, mark);
         grid.setSpace(2, 2, mark);
         grid.setSpace(3, 3, mark);
@@ -79,7 +79,7 @@ public class BoardScannerTest {
         int x = 0;
         int y = 0;
         GridValues grid = new GridValues(15);
-        short mark = 1;
+        int mark = 1;
         grid.setSpace(1, y, mark);
         grid.setSpace(2, y, mark);
         grid.setSpace(3, y, mark);
@@ -96,7 +96,7 @@ public class BoardScannerTest {
         int x = 5;
         int y = 0;
         GridValues grid = new GridValues(15);
-        short mark = 1;
+        int mark = 1;
         grid.setSpace(2, y, mark);
         grid.setSpace(3, y, mark);
         grid.setSpace(4, y, mark);
@@ -113,7 +113,7 @@ public class BoardScannerTest {
         int x = 5;
         int y = 5;
         GridValues grid = new GridValues(15);
-        short mark = 1;
+        int mark = 1;
         grid.setSpace(2, 2, mark);
         grid.setSpace(3, 3, mark);
         grid.setSpace(4, 4, mark);
