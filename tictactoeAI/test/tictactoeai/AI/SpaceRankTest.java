@@ -64,23 +64,5 @@ public class SpaceRankTest {
         assertEquals(144, instance.rank);
     }
 
-    /**
-     * Test of calculateOpponentsRank method, of class SpaceRank.
-     */
-    @Test
-    public void testCalculateOpponentsRank() {
-        System.out.println("calculateOpponentsRank");
-        int openSides = 2;
-        int consecutives = 3;
-        SpaceRank instance = new SpaceRank(0, 0);
-        instance.setOpenSidesAndConsecutives(openSides, consecutives);
-        instance.setOpenSidesAndConsecutives(openSides, consecutives);
-        instance.setOpenSidesAndConsecutives(openSides, consecutives);
-        instance.setOpenSidesAndConsecutives(openSides, consecutives);
-        instance.setOpenSidesAndConsecutives(openSides, consecutives);
-        
-        instance.calculateOpponentsRank();
-        
-        assertEquals(108, instance.opponentsRank);
-    }
+    
 }

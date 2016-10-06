@@ -20,6 +20,10 @@ public class AI {
     public AI(int mark) {
         this.mark = mark;
     }
+    public AI(int mark, int maxDepth) {
+        this.mark = mark;
+        this.maxDepth = maxDepth;
+    }
     
     /**
      * get the coordinates of next move
@@ -32,12 +36,12 @@ public class AI {
         srList[0].setMoveOnGrid(gv, mark);
         
         int indexOfBestMove = 0;
-        int rankOfBestMove = rankByFutureMoves(srList[0].getGridValues(), 1) + srList[0].getTotalRank();
+        int rankOfBestMove = rankByFutureMoves(srList[0].getGridValues(), 1) + srList[0].getRank();
         int comparingRank;
         
         for (int i = 1; i < srList.length && srList[i] != null; i++) {
             srList[i].setMoveOnGrid(gv, mark);
-            comparingRank = rankByFutureMoves(srList[i].getGridValues(), 1) + srList[i].getTotalRank();
+            comparingRank = rankByFutureMoves(srList[i].getGridValues(), 1) + srList[i].getRank();
             if (comparingRank > rankOfBestMove) {
                 indexOfBestMove = i;
                 rankOfBestMove = comparingRank;
@@ -66,21 +70,20 @@ public class AI {
         
 
         if (depth >= maxDepth) {
-            return bestMove(srList).getTotalRank()/depth;
+            return bestMove(srList).getRank()/depth;
         }
 
         int highestRank = 0;
         int compareRank = 0;
         for (int i = 0; i < srList.length && srList[i] != null; i++) {
             srList[i].setMoveOnGrid(gv, nextMoveMark);
-            newDepth = depth + 1;
-            compareRank = rankByFutureMoves(srList[i].getGridValues(), newDepth);
+            compareRank = rankByFutureMoves(srList[i].getGridValues(), depth + 1);
             if (compareRank > highestRank) {
                 highestRank = compareRank;
             }
         }
         
-        return highestRank / (depth * 2);
+        return highestRank / depth;
     }
     
     
@@ -101,7 +104,8 @@ public class AI {
 
         for (int i = 1; i < srList.length && rg.heapSize()> 0; i++) {
             sr = rg.getBestMove();
-            if (srList[0].getTotalRank() - sr.getTotalRank() > 10 * 6) {
+            
+            if (srList[0].getRank() - sr.getRank() > 10 * 6) {
                 break;
             }
             srList[i] = sr;
@@ -121,7 +125,7 @@ public class AI {
             System.out.println("alarm");
         }
         for (int i = 1; i < moves.length && moves[i] != null;i++) {
-            if (bestMove.getTotalRank() < moves[i].getTotalRank()) {
+            if (bestMove.getRank() < moves[i].getRank()) {
                 bestMove = moves[i];
             }
         }
@@ -150,9 +154,10 @@ public class AI {
             
             sr.calculateRank();
             sr.calculateOpponentsRank();
-            if (sr.getTotalRank() > 0) {
-                rg.addSpaceRank(sr);
+            if (sr.getRank() == 0) {
+                continue;
             }
+            rg.addSpaceRank(sr);
         }
         
         return rg;

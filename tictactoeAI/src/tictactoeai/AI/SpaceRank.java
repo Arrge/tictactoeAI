@@ -8,7 +8,7 @@ import tictactoeai.board.GridValues;
  */
 public class SpaceRank {
     int x, y;
-    int rank, opponentsRank;
+    int rank;
     int index;
     GridValues gv;
     int[] consecutives;
@@ -64,13 +64,13 @@ public class SpaceRank {
         int sum;
         for (int i = 4; i < 8; i++) {
             if (consecutives[i] == 4) {
-                opponentsRank += 36 * rankMultiplier;
+                rank += 36 * rankMultiplier;
             } 
             else if (consecutives[i] + openSides[i] >= 5) {
-                opponentsRank += 18 * rankMultiplier;
+                rank += 18 * rankMultiplier;
             } 
             else {
-                opponentsRank += consecutives[i] * openSides[i] * rankMultiplier;
+                rank += consecutives[i] * openSides[i] * rankMultiplier;
             }
         }
     }
@@ -91,14 +91,6 @@ public class SpaceRank {
         return y;
     }
 
-    /**
-     *
-     * @return
-     */
-    public int getRank() {
-        return rank;
-    }
-
     public void setGrid(GridValues gv) {
         this.gv = gv.cloneGrid();
     }
@@ -110,18 +102,10 @@ public class SpaceRank {
 
     /**
      *
-     * @return
-     */
-    public int getOpponentsRank() {
-        return opponentsRank;
-    }
-    
-    /**
-     *
      * @return opponents rank + rank
      */
-    public int getTotalRank() {
-        return rank + opponentsRank;
+    public int getRank() {
+        return rank;
     }
 
     public GridValues getGridValues() {

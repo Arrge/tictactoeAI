@@ -88,6 +88,12 @@ public class GridValues {
     public int[][] getGrid() {
         return grid;
     }
+
+    public int getSetValues() {
+        return setValues;
+    }
+    
+    
     
     /**
      *

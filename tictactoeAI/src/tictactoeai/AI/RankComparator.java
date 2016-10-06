@@ -19,6 +19,6 @@ public class RankComparator implements Comparator<SpaceRank>
     @Override
     public int compare(SpaceRank x, SpaceRank y)
     {
-        return y.getTotalRank() - x.getTotalRank();
+        return y.getRank() - x.getRank();
     }
 }

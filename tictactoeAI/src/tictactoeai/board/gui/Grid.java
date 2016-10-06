@@ -20,11 +20,11 @@ public class Grid extends javax.swing.JPanel {
     private int nextMove;
     private GridValues gv;
     private final int gridSideLength = 300;
-    private AI bob;
+    private AI bob, jack;
     private Point lastMove;
     private boolean gameOver;
     private int moves;
-    private int difficulty;
+    private int difficulty = 3;
     /**
      * Creates new form grid
      */
@@ -32,13 +32,32 @@ public class Grid extends javax.swing.JPanel {
         moves = 0;
         nextMove = 1;
         gv = new GridValues(15);
-        bob = new AI(nextMove);
+        bob = new AI(nextMove, difficulty);
+        
         addMove(7,7);
         initComponents();
         gameOver = false;
         
     }
 
+    public void botMatch(int maxDepth) throws InterruptedException {
+        jack = new AI(bob.getOpponentsMark(), maxDepth);
+        Point p;
+        while (!gameOver && gv.getSetValues() < gv.getSideLength() * gv.getSideLength()) {
+            p = jack.getMove(gv);
+            addMove(p.x, p.y);
+
+            if (gameOver || gv.getSetValues() >= gv.getSideLength() * gv.getSideLength()) {
+                drawWon(getGraphics());
+                return;
+            }
+            p = bob.getMove(gv);
+            addMove(p.x, p.y);
+
+        }
+        drawLost(getGraphics());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,14 +159,14 @@ public class Grid extends javax.swing.JPanel {
     
     private void drawLost(Graphics g) {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
-        g.setColor(Color.red);
-        g.drawString("you lost!", 100, 60);
+        g.setColor(Color.blue);
+        g.drawString("cross won!", 100, 60);
     }
     
     private void drawWon(Graphics g) {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
         g.setColor(Color.red);
-        g.drawString("you won!", 100, 60);
+        g.drawString("circle won!", 100, 60);
     }
     
     private void drawLastMove(Graphics g) {
@@ -222,7 +241,7 @@ public class Grid extends javax.swing.JPanel {
         nextMove = 1;
         moves = 0;
         gv = new GridValues(15);
-        bob = new AI(nextMove);
+        bob = new AI(nextMove, difficulty);
         addMove(7,7);
         gameOver = false;
     }
