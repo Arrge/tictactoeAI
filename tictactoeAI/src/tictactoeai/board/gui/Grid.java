@@ -1,9 +1,11 @@
 
 package tictactoeai.board.gui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 import tictactoeai.AI.AI;
@@ -16,15 +18,18 @@ import tictactoeai.board.GridValues;
  * @author Liekkipipo-pc
  */
 public class Grid extends javax.swing.JPanel {
-    //false = circle, true = cross
-    private int nextMove;
-    private GridValues gv;
+    
     private final int gridSideLength = 300;
-    private AI bob, jack;
-    private Point lastMove;
-    private boolean gameOver;
+    private int nextMove;
     private int moves;
     private int difficulty = 3;
+    
+    private GridValues gv;
+    private AI bob, jack;
+    private Point lastMove;
+    
+    private boolean gameOver;
+    
     /**
      * Creates new form grid
      */
@@ -33,27 +38,46 @@ public class Grid extends javax.swing.JPanel {
         nextMove = 1;
         gv = new GridValues(15);
         bob = new AI(nextMove, difficulty);
+        gameOver = false;  
         
         addMove(7,7);
-        initComponents();
-        gameOver = false;
-        
+        initComponents(); 
     }
 
+    /**
+     * initiate a AI vs AI match
+     * @param maxDepth maximum number of turns the ai can calculate ahead (maxDepth + 1)
+     * @throws InterruptedException throws exception if the game cannot be won by either side
+     */
     public void botMatch(int maxDepth) throws InterruptedException {
         jack = new AI(bob.getOpponentsMark(), maxDepth);
         Point p;
+        
         while (!gameOver && gv.getSetValues() < gv.getSideLength() * gv.getSideLength()) {
-            p = jack.getMove(gv);
+            try {
+                p = jack.getMove(gv);
+            } 
+            catch (Exception e) {
+                System.out.println("no winning move");
+                break;
+            }
+            
             addMove(p.x, p.y);
-
+            
             if (gameOver || gv.getSetValues() >= gv.getSideLength() * gv.getSideLength()) {
                 drawWon(getGraphics());
                 return;
             }
-            p = bob.getMove(gv);
+            
+            try {
+                p = bob.getMove(gv);
+            } 
+            catch (Exception e) {
+                System.out.println("no winning move");
+                break;
+            }
+            
             addMove(p.x, p.y);
-
         }
         drawLost(getGraphics());
     }
@@ -85,12 +109,6 @@ public class Grid extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    
-    public void changeAIDifficulty(int depth) {
-        difficulty = depth;
-        bob.setMaxDepth(depth);
-    }
     
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         if (gameOver) {
@@ -101,13 +119,13 @@ public class Grid extends javax.swing.JPanel {
         }
         if (gameOver) {
             drawWon(getGraphics());
-            
             return;
         }
+        
         Point p = bob.getMove(gv);
         addMove(p.x, p.y);
+        
         if (gameOver) {
-            
             drawLost(getGraphics());
         }
     }//GEN-LAST:event_formMouseClicked
@@ -122,13 +140,15 @@ public class Grid extends javax.swing.JPanel {
         if (x > 14 || y > 14 || x < 0 || y < 0 || !gv.isEmpty(x, y)) {
             return false;
         }
-        moves++;
+
         gv.setSpace(x, y, nextMove);
+        moves++;
         lastMove = new Point(x, y);
+        
         if (checkWinCondition()) {
             gameOver = true;
-            System.out.println("rekt");
         }
+        
         if (nextMove == 1) {
             nextMove = 2;
         }
@@ -140,9 +160,50 @@ public class Grid extends javax.swing.JPanel {
         return true;
     }
     
-    public boolean checkWinCondition() {
+    private boolean checkWinCondition() {
         SpaceRank sr = BoardScanner.scan(lastMove.x, lastMove.y, gv, nextMove);
         return sr.calculateRank();
+    }
+    
+     /**
+     * 
+     * @return return the board
+     */
+    public GridValues getGv() {
+        return gv;
+    }
+
+    /**
+     *  reset the board
+     * 
+     */
+    public void reset() {
+        getGraphics().clearRect(0, 0, 300, 300);
+        
+        nextMove = 1;
+        moves = 0;
+        gv = new GridValues(15);
+        bob = new AI(nextMove, difficulty);
+        gameOver = false;
+        
+        addMove(7,7);
+    }
+
+    /**
+     *
+     * @return amount of moves done
+     */
+    public int getMoves() {
+        return moves;
+    }
+    
+    /**
+     * change the difficulty of cross AI
+     * @param depth
+     */
+    public void changeAIDifficulty(int depth) {
+        difficulty = depth;
+        bob.setMaxDepth(depth);
     }
     
     @Override
@@ -154,40 +215,8 @@ public class Grid extends javax.swing.JPanel {
         if (lastMove != null) {
             drawLastMove(g);
         }
-       
     }
-    
-    private void drawLost(Graphics g) {
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
-        g.setColor(Color.blue);
-        g.drawString("cross won!", 100, 60);
-    }
-    
-    private void drawWon(Graphics g) {
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
-        g.setColor(Color.red);
-        g.drawString("circle won!", 100, 60);
-    }
-    
-    private void drawLastMove(Graphics g) {
-        g.setColor(Color.magenta);
-        int x = lastMove.x;
-        int y = lastMove.y;
-        
-        if (gv.getGrid()[x][y] == 1) {
-            x = x * (gridSideLength/gv.getSideLength());
-            y = y * (gridSideLength/gv.getSideLength());
-            g.drawLine(x, y, x+(gridSideLength/gv.getSideLength()), y+(gridSideLength/gv.getSideLength()));
-            g.drawLine(x, y+(gridSideLength/gv.getSideLength()), x+(gridSideLength/gv.getSideLength()), y);
-        } 
-        else if (gv.getGrid()[x][y] == 2) {
-            g.setColor(Color.red);
-            x = x * (gridSideLength/gv.getSideLength());
-            y = y * (gridSideLength/gv.getSideLength());
-            g.drawOval(x, y, (gridSideLength/gv.getSideLength()), (gridSideLength/gv.getSideLength()));
-        }
-    }
-    
+
     private void drawGrid(Graphics g) {
         for (int x = 0; x <= gridSideLength; x += gridSideLength / 15) {
             g.drawLine(x, 0, x, gridSideLength);
@@ -196,7 +225,6 @@ public class Grid extends javax.swing.JPanel {
     }
     
     private void drawSymbols(Graphics g) {
-        g.setColor(Color.black);
         for (int x = 0; x < gv.getSideLength(); x++) {
             for (int y = 0; y < gv.getSideLength(); y++) {
                 if (gv.getGrid()[x][y] == 1) {
@@ -210,47 +238,65 @@ public class Grid extends javax.swing.JPanel {
     }
     
     private void drawCross(int x, int y, Graphics g) {
-        g.setColor(Color.blue);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2d.setColor(Color.blue);
+        
         x = x * (gridSideLength/gv.getSideLength());
         y = y * (gridSideLength/gv.getSideLength());
-        g.drawLine(x, y, x+(gridSideLength/gv.getSideLength()), y+(gridSideLength/gv.getSideLength()));
-        g.drawLine(x, y+(gridSideLength/gv.getSideLength()), x+(gridSideLength/gv.getSideLength()), y);
+        
+        g2d.drawLine(x, y, x+(gridSideLength/gv.getSideLength()), y+(gridSideLength/gv.getSideLength()));
+        g2d.drawLine(x, y+(gridSideLength/gv.getSideLength()), x+(gridSideLength/gv.getSideLength()), y);
     }
     
     private void drawCircle(int x, int y, Graphics g) {
-        g.setColor(Color.red);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2d.setColor(Color.red);
+        
         x = x * (gridSideLength/gv.getSideLength());
         y = y * (gridSideLength/gv.getSideLength());
-        g.drawOval(x, y, (gridSideLength/gv.getSideLength()), (gridSideLength/gv.getSideLength()));
+        
+        g2d.drawOval(x, y, (gridSideLength/gv.getSideLength()), (gridSideLength/gv.getSideLength()));
     }
 
-    /**
-     *
-     * @return return the board
-     */
-    public GridValues getGv() {
-        return gv;
-    }
-
-    /**
-     *  reset the board
-     * 
-     */
-    public void reset() {
-        getGraphics().clearRect(0, 0, 300, 300);
-        nextMove = 1;
-        moves = 0;
-        gv = new GridValues(15);
-        bob = new AI(nextMove, difficulty);
-        addMove(7,7);
-        gameOver = false;
-    }
-
-    public int getMoves() {
-        return moves;
+     private void drawLost(Graphics g) {
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
+        g.setColor(new Color(1,1, 255));
+        
+        g.drawString("cross won!", 315, 200);
     }
     
+    private void drawWon(Graphics g) {
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
+        g.setColor(new Color(255, 1, 1));
+        
+        g.drawString("circle won!", 315, 200);
+    }
     
+    private void drawLastMove(Graphics g) {
+        int x = lastMove.x;
+        int y = lastMove.y;
+        
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2d.setColor(Color.green);
+        
+        if (gv.getGrid()[x][y] == 1) {
+            x = x * (gridSideLength/gv.getSideLength());
+            y = y * (gridSideLength/gv.getSideLength());
+            
+            g2d.drawLine(x, y, x+(gridSideLength/gv.getSideLength()), y+(gridSideLength/gv.getSideLength()));
+            g2d.drawLine(x, y+(gridSideLength/gv.getSideLength()), x+(gridSideLength/gv.getSideLength()), y);
+        } 
+        else if (gv.getGrid()[x][y] == 2) {
+            x = x * (gridSideLength/gv.getSideLength());
+            y = y * (gridSideLength/gv.getSideLength());
+            
+            g2d.drawLine(x, y, x+(gridSideLength/gv.getSideLength()), y+(gridSideLength/gv.getSideLength()));
+            g2d.drawLine(x, y+(gridSideLength/gv.getSideLength()), x+(gridSideLength/gv.getSideLength()), y);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

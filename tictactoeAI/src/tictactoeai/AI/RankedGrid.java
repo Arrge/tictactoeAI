@@ -1,8 +1,6 @@
 
 package tictactoeai.AI;
 
-import java.util.PriorityQueue;
-
 /**
  *
  * @author Liekkipipo-pc

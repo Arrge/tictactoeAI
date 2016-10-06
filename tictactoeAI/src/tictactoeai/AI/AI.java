@@ -31,6 +31,7 @@ public class AI {
      * @return returns coordinates of best move
      */
     public Point getMove(GridValues gv) {
+        
         SpaceRank[] srList = getMoves(gv);
 
         srList[0].setMoveOnGrid(gv, mark);
@@ -58,21 +59,22 @@ public class AI {
      * @return returns the rank of best future move 
      */
     private int rankByFutureMoves(GridValues gv, int depth) {
+        int rankDivisor = 1 + (depth/2);
         int nextMoveMark;
-        int newDepth = 0;
+        
         if (depth % 2 == 0) {
             nextMoveMark = mark;
         } 
         else {
             nextMoveMark = getOpponentsMark();
-        } 
-        SpaceRank[] srList = getMoves(gv);
-        
-
-        if (depth >= maxDepth) {
-            return bestMove(srList).getRank()/depth;
         }
+        
+        SpaceRank[] srList = getMoves(gv);
 
+        if (depth >= maxDepth || srList[1] == null) {
+            return bestMove(srList).getRank()/rankDivisor;
+        }
+        
         int highestRank = 0;
         int compareRank = 0;
         for (int i = 0; i < srList.length && srList[i] != null; i++) {
@@ -82,8 +84,11 @@ public class AI {
                 highestRank = compareRank;
             }
         }
-        
-        return highestRank / depth;
+        return highestRank / rankDivisor;
+    }
+
+    public int getMaxDepth() {
+        return maxDepth;
     }
     
     
@@ -96,16 +101,14 @@ public class AI {
     private SpaceRank[] getMoves(GridValues gv) {
         RankedGrid rg = rankMoves(gv);
         SpaceRank sr = rg.getBestMove();
-        if (sr == null) {
-            System.out.println("alarm");
-        }
+        
         SpaceRank[] srList = new SpaceRank[maxBestMoves];
         srList[0] = sr;
 
         for (int i = 1; i < srList.length && rg.heapSize()> 0; i++) {
             sr = rg.getBestMove();
             
-            if (srList[0].getRank() - sr.getRank() > 10 * 6) {
+            if (srList[0].getRank() - sr.getRank() > 10 * 4) {
                 break;
             }
             srList[i] = sr;
@@ -121,9 +124,7 @@ public class AI {
      */
     private SpaceRank bestMove(SpaceRank[] moves) {
         SpaceRank bestMove = moves[0];
-        if (bestMove == null) {
-            System.out.println("alarm");
-        }
+       
         for (int i = 1; i < moves.length && moves[i] != null;i++) {
             if (bestMove.getRank() < moves[i].getRank()) {
                 bestMove = moves[i];
@@ -165,7 +166,7 @@ public class AI {
     
     
     /**
-     * 
+     *  
      * @return return the mark of the AI (1 = cross 2 = circle)
      */
     public int getMark() {
