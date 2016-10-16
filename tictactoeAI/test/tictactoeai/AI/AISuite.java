@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
  * @author Liekkipipo-pc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({tictactoeai.AI.RankedGridTest.class, tictactoeai.AI.AITest.class, tictactoeai.AI.RankComparatorTest.class, tictactoeai.AI.tools.ToolsSuite.class, tictactoeai.AI.SpaceRankTest.class})
+@Suite.SuiteClasses({tictactoeai.AI.tools.ToolsSuite.class, tictactoeai.AI.SpaceRankTest.class})
 public class AISuite {
 
     @BeforeClass

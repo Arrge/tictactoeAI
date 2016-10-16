@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
  * @author Liekkipipo-pc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({tictactoeai.board.gui.GUITest.class, tictactoeai.board.gui.GridTest.class})
+@Suite.SuiteClasses({tictactoeai.board.gui.GridTest.class})
 public class GuiSuite {
 
     @BeforeClass

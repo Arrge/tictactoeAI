@@ -12,7 +12,6 @@ Erot 7 ja 5 siirtoa eteenpäin laskevalla tekoälyllä on vaikeustasollisesti ja
 
 Esimerkiksi 5 siirtoa eteenpäin laskeva ensin aloittava tekoäly voittaa 7 siirtoa eteenpäin laskevan tekoälyn. 	
 
-
 Laskiessa 5 siirtoa eteenpäin:
 
 ensimmäinen siirto: ~90 ms
@@ -21,4 +20,4 @@ kolmas siirto:		~60 ms
 
 Tämän jälkeen aikaa menee 10-60 ms riippuen arvokkaiden siirtomahdollisuuksien määrästä. (keskimäärin ~25 ms)
 
-pienemmillä syvyyksillä aikaa kuluu enään keskimäärin ~12 ms
+Pienemmillä syvyyksillä aikaa kuluu enään keskimäärin ~12 ms.

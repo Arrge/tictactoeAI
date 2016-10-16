@@ -178,7 +178,7 @@ public class Grid extends javax.swing.JPanel {
      * 
      */
     public void reset() {
-        getGraphics().clearRect(0, 0, 300, 300);
+        //getGraphics().clearRect(0, 0, 300, 300);
         
         nextMove = 1;
         moves = 0;

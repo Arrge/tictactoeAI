@@ -85,7 +85,7 @@ public class BoardScannerTest {
         grid.setSpace(3, y, mark);
         SpaceRank result = BoardScanner.scan(x, y, grid, mark);
         assertEquals(false, result.calculateRank());
-        assertEquals(3, result.getRank());
+        assertEquals(18, result.getRank());
     }
     /**
      * Test of scan method, of class BoardScanner.
@@ -102,7 +102,7 @@ public class BoardScannerTest {
         grid.setSpace(4, y, mark);
         SpaceRank result = BoardScanner.scan(x, y, grid, mark);
         assertEquals(false, result.calculateRank());
-        assertEquals(4, result.getRank());
+        assertEquals(144, result.getRank());
     }
     /**
      * Test of scan method, of class BoardScanner.
@@ -119,6 +119,6 @@ public class BoardScannerTest {
         grid.setSpace(4, 4, mark);
         SpaceRank result = BoardScanner.scan(x, y, grid, mark);
         assertEquals(false, result.calculateRank());
-        assertEquals(4, result.getRank());
+        assertEquals(144, result.getRank());
     }
 }

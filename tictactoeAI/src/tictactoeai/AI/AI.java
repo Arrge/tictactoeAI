@@ -31,17 +31,16 @@ public class AI {
      * @return returns coordinates of best move
      */
     public Point getMove(GridValues gv) {
-        
         SpaceRank[] srList = getMoves(gv);
-
         srList[0].setMoveOnGrid(gv, mark);
         
         int indexOfBestMove = 0;
         int rankOfBestMove = rankByFutureMoves(srList[0].getGridValues(), 1) + srList[0].getRank();
         int comparingRank;
-        
+        //calculate values of future moves and return the most valuable move
         for (int i = 1; i < srList.length && srList[i] != null; i++) {
             srList[i].setMoveOnGrid(gv, mark);
+            
             comparingRank = rankByFutureMoves(srList[i].getGridValues(), 1) + srList[i].getRank();
             if (comparingRank > rankOfBestMove) {
                 indexOfBestMove = i;
@@ -61,7 +60,7 @@ public class AI {
     private int rankByFutureMoves(GridValues gv, int depth) {
         int rankDivisor = 1 + (depth/2);
         int nextMoveMark;
-        
+        //get the next moves mark from depth
         if (depth % 2 == 0) {
             nextMoveMark = mark;
         } 
@@ -70,15 +69,16 @@ public class AI {
         }
         
         SpaceRank[] srList = getMoves(gv);
-
+        
         if (depth >= maxDepth || srList[1] == null) {
-            return bestMove(srList).getRank()/rankDivisor;
+            return bestMove(srList).getRank() / rankDivisor;
         }
         
         int highestRank = 0;
         int compareRank = 0;
         for (int i = 0; i < srList.length && srList[i] != null; i++) {
             srList[i].setMoveOnGrid(gv, nextMoveMark);
+            
             compareRank = rankByFutureMoves(srList[i].getGridValues(), depth + 1);
             if (compareRank > highestRank) {
                 highestRank = compareRank;

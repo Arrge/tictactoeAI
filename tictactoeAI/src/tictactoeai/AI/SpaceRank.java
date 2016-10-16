@@ -73,6 +73,8 @@ public class SpaceRank {
                 rank += consecutives[i] * openSides[i] * rankMultiplier;
             }
         }
+        consecutives = null;
+        openSides = null;
     }
 
     /**
