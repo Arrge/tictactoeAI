@@ -4,7 +4,7 @@ import tictactoeai.AI.SpaceRank;
 import tictactoeai.board.GridValues;
 
 /**
- *
+ * scan adjacent spaces for information required in ranking a move
  * @author Liekkipipo-pc
  */
 public class BoardScanner {

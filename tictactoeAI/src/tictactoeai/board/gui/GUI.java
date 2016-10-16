@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * base gui
  * @author Liekkipipo-pc
  */
 public class GUI extends javax.swing.JFrame {

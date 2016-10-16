@@ -2,7 +2,7 @@
 package tictactoeai.AI;
 
 /**
- *
+ * a maximum heap containing the ranks of every space
  * @author Liekkipipo-pc
  */
 public class RankedGrid {

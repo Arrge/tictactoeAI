@@ -14,7 +14,7 @@ import tictactoeai.AI.tools.BoardScanner;
 import tictactoeai.board.GridValues;
 
 /**
- *
+ * GUI for board
  * @author Liekkipipo-pc
  */
 public class Grid extends javax.swing.JPanel {

@@ -6,7 +6,7 @@ import tictactoeai.AI.tools.BoardScanner;
 import tictactoeai.board.GridValues;
 
 /**
- *
+ * AI
  * @author Liekkipipo-pc
  */
 public class AI {
@@ -14,7 +14,7 @@ public class AI {
     private int maxBestMoves = 5;
     private int maxDepth = 2;
     /**
-     * 
+     * AI
      * @param mark 1 = cross, 2 = circle
      */
     public AI(int mark) {

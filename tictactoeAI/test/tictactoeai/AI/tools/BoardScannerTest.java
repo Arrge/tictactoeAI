@@ -38,7 +38,7 @@ public class BoardScannerTest {
      * Test of scan method, of class BoardScanner.
      */
     @Test
-    public void testScan1() {
+    public void testScanFindsWinCondition1() {
         System.out.println("scan");
         int x = 0;
         int y = 0;
@@ -56,7 +56,7 @@ public class BoardScannerTest {
      * Test of scan method, of class BoardScanner.
      */
     @Test
-    public void testScan4() {
+    public void testScanFindsWinCondition4() {
         System.out.println("scan");
         int x = 0;
         int y = 0;
@@ -74,7 +74,7 @@ public class BoardScannerTest {
      * Test of scan method, of class BoardScanner.
      */
     @Test
-    public void testScan2() {
+    public void testScanFindsThreeConsecutiveOneSideBlocked2() {
         System.out.println("scan");
         int x = 0;
         int y = 0;
@@ -91,7 +91,7 @@ public class BoardScannerTest {
      * Test of scan method, of class BoardScanner.
      */
     @Test
-    public void testScan3() {
+    public void testScanFindsThreeConsecutiveWinCondition3() {
         System.out.println("scan");
         int x = 5;
         int y = 0;
@@ -108,7 +108,7 @@ public class BoardScannerTest {
      * Test of scan method, of class BoardScanner.
      */
     @Test
-    public void testScan5() {
+    public void testScanFindsThreeConsecutiveWinConditionDiagonal5() {
         System.out.println("scan");
         int x = 5;
         int y = 5;

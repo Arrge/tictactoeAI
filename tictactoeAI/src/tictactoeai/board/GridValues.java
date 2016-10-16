@@ -1,7 +1,7 @@
 package tictactoeai.board;
 
 /**
- *
+ * Array for holding the board state
  * @author Liekkipipo-pc
  */
 public class GridValues {
@@ -9,7 +9,7 @@ public class GridValues {
     int sideLength;
     int setValues;
     /**
-     * 
+     * Array for holding the board state
      * @param sideLength the grid size is sideLength * sideLength
      */
     public GridValues(int sideLength) {

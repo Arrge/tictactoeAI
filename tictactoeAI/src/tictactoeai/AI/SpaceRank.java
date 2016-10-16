@@ -3,7 +3,7 @@ package tictactoeai.AI;
 import tictactoeai.board.GridValues;
 
 /**
- * 
+ * rank calculator for a single space
  * @author Liekkipipo-pc
  */
 public class SpaceRank {

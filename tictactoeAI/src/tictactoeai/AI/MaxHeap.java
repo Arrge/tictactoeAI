@@ -1,7 +1,7 @@
 package tictactoeai.AI;
 
 /**
- *
+ * maximum heap for holding SpaceRank objects
  * @author Liekkipipo-pc
  */
 public class MaxHeap {
