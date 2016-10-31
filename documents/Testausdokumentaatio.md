@@ -1,5 +1,6 @@
 ##Testausdokumentaatio
-
+Testasin kauanko tekoälyllä menee laskea siirto riippuen kuinka monta tulevaa siirtoa otetaan huomioon siirtoa laskettaessa.
+ 
 Laskiessa 7 siirtoa eteenpäin:
 
 ensimmäinen siirto: ~1440 ms
